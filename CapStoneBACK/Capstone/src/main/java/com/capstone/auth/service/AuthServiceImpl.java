@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService{
         
     	Authentication authentication = authenticationManager.authenticate(
         		new UsernamePasswordAuthenticationToken(
-        				loginDto.getUsername(), loginDto.getPassword()
+        				loginDto.getEmail(), loginDto.getPassword()
         		)
         ); 
     	

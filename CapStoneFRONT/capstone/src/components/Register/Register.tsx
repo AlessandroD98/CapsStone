@@ -20,7 +20,7 @@ export const Register = ({ onLogin }: LoginProps) => {
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
-  const [pwd, setPwd] = useState("");
+  const [password, setPassword] = useState("");
   const [validPwd, setValidPwd] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
 
@@ -42,17 +42,17 @@ export const Register = ({ onLogin }: LoginProps) => {
   }, [email]);
 
   useEffect(() => {
-    const result = PWD_REGEX.test(pwd);
+    const result = PWD_REGEX.test(password);
     console.log(result);
-    console.log(pwd);
+    console.log(password);
     setValidPwd(result);
-    const match = pwd === matchPwd;
+    const match = password === matchPwd;
     setValidMatch(match);
-  }, [pwd, matchPwd]);
+  }, [password, matchPwd]);
 
   useEffect(() => {
     setErrMsg("");
-  }, [email, pwd, matchPwd]);
+  }, [email, password, matchPwd]);
 
   const handleClick = () => {
     onLogin();
@@ -61,13 +61,13 @@ export const Register = ({ onLogin }: LoginProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const v1 = EMAIL_REGEX.test(email);
-    const v2 = PWD_REGEX.test(pwd);
+    const v2 = PWD_REGEX.test(password);
     if (!v1 || !v2) {
       setErrMsg("invalid Entry");
       return;
     }
     try {
-      const response = await axios.post(REGISTER_URL, JSON.stringify({ email, pwd }), {
+      const response = await axios.post(REGISTER_URL, JSON.stringify({ email, password }), {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
@@ -147,14 +147,14 @@ export const Register = ({ onLogin }: LoginProps) => {
                 <span className={validPwd ? "valid" : "hide"}>
                   <FaCheck />
                 </span>
-                <span className={validPwd || !pwd ? "hide" : "invalid"}>
+                <span className={validPwd || !password ? "hide" : "invalid"}>
                   <FaTimes />
                 </span>
               </div>
               <input
                 type="password"
                 id="password"
-                onChange={(e) => setPwd(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 aria-invalid={validPwd ? "false" : "true"}
                 aria-describedby="pwdnote"

@@ -17,7 +17,7 @@ export const Login = () => {
   const errRef = useRef<HTMLInputElement | null>(null);
 
   const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
+  const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
@@ -31,15 +31,15 @@ export const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(LOGIN_URL, JSON.stringify({ email, pwd }), {
+      const response = await axios.post(LOGIN_URL, JSON.stringify({ email, password }), {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      const accessToken = response?.data?.accesToken;
+      const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      setAuth({ email, pwd, roles, accessToken });
+      setAuth({ email, password, roles, accessToken });
       setEmail("");
-      setPwd("");
+      setPassword("");
       navigate(from, { replace: true });
     } catch (error: any) {
       if (!error?.response) {
@@ -76,7 +76,13 @@ export const Login = () => {
         </label>
         <label htmlFor="password">
           <span>Password</span>
-          <input type="password" id="password" onChange={(e) => setPwd(e.target.value)} value={pwd} required />
+          <input
+            type="password"
+            id="password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            required
+          />
         </label>
         <button className="submit">Sign In</button>
       </form>

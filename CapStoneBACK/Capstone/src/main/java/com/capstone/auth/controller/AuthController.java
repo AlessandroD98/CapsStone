@@ -32,7 +32,7 @@ public class AuthController {
     	String token = authService.login(loginDto);
 
         JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
-        jwtAuthResponse.setUsername(loginDto.getUsername());
+        jwtAuthResponse.setEmail(loginDto.getEmail());
         jwtAuthResponse.setAccessToken(token);
 
         return ResponseEntity.ok(jwtAuthResponse);
