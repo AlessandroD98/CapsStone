@@ -1,5 +1,5 @@
 export interface IUser {
-    user: string,
+    email: string,
     pwd: string,
     roles: String[],
     accessToken: String,

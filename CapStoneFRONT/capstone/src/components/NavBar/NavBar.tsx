@@ -46,7 +46,7 @@ export const NavBar = () => {
           }}
         >
           <img src={Logo} alt="logo" className="w-9 h-9 object-contain" />
-          <p className="text-black text-[18px] font-bold cursor-pointer flex ">
+          <p className="text-[18px] font-bold cursor-pointer flex ">
             Capstone &nbsp;
             <span className="sm:block hidden"> | Locksmith 2.0</span>
           </p>

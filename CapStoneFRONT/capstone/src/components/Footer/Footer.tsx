@@ -1,5 +1,5 @@
 import "./Footer.scss";
 
 export const Footer = () => {
-  return <p></p>;
+  return <p>Qui va il Footer</p>;
 };

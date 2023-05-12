@@ -8,11 +8,13 @@ import { Home } from "./components/Home/Home";
 import { Preventivo } from "./components/Preventivo/Preventivo";
 import { Gallery } from "./components/Gallery/Gallery";
 import { NavBar } from "./components/NavBar/NavBar";
+import { NotFound } from "./components/NotFound/NotFound";
 
 function App() {
   return (
     <>
       <NavBar />
+
       <Routes>
         {/* Routes da proteggere solo con ruoli permessi */}
 
@@ -27,6 +29,7 @@ function App() {
         <Route element={<RequiredAuth allowedRoles={["ROLE_ADMIN"]} />}>
           <Route path="/adminpage" element={<AdminPage />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
