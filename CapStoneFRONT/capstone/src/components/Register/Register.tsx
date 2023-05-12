@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { FaInfoCircle, FaCheck, FaTimes } from "react-icons/fa";
 import axios from "../../api/axios";
+import "./Register.scss";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -81,7 +82,7 @@ export const Register = () => {
         <section>
           <h1>Success!</h1>
           <p>
-            <a href="#">Sing In</a>
+            <a href="/">Sing In</a>
           </p>
         </section>
       ) : (
