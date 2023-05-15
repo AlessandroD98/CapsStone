@@ -1,0 +1,19 @@
+header {
+  margin: 80px 0px;
+
+  .WelcomeSection {
+    p {
+      span {
+        @media (max-width: 899px) {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .cont {
+    @media (max-width: 900px) {
+      display: none;
+    }
+  }
+}

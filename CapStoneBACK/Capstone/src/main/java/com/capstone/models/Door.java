@@ -19,7 +19,6 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Door extends Article {
 
-	@Enumerated(EnumType.STRING)
-	private Door_Materials doorMaterials;
+	
 	
 }

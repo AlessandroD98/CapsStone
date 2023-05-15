@@ -1,19 +1,44 @@
-import { useState } from "react";
-import { Login } from "../Login/Login";
-import { Register } from "../Register/Register";
+import About from "../About/About";
+import Contact from "../Contact/Contact";
+import FeedBack from "../FeedBack/FeedBack";
+import { Header } from "../Header/Header";
+import Experience from "../MidPart/Experience";
 import "../Register/Register.scss";
+import { motion } from "framer-motion";
 
 export const Home = () => {
-  const [islogged, setIslogged] = useState(true);
+  // const [islogged, setIslogged] = useState(true);
 
-  const handleLogin = () => {
-    setIslogged(!islogged);
-  };
+  // const handleLogin = () => {
+  //   setIslogged(!islogged);
+  // };
 
   return (
-    <div className={islogged ? "cont" : "cont s--signup"}>
-      <Login />
-      <Register onLogin={handleLogin} />
+    <div>
+      <Header />
+      <div className="absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center">
+        <a href="#about">
+          {/* Pill component */}
+
+          {/* <div className="w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
+            <motion.div
+              animate={{
+                y: [0, 24, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                repeatType: "loop",
+              }}
+              className="w-3 h-3 rounded-full bg-secondary mb-1"
+            ></motion.div>
+          </div> */}
+        </a>
+      </div>
+      <About />
+      <Experience />
+      <FeedBack />
+      <Contact />
     </div>
   );
 };

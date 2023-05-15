@@ -3,8 +3,6 @@ import { styles } from "../../utils/style";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Logo from "../../assets/logo.svg";
-import menu from "../../assets/menu.svg";
-import close from "../../assets/close.svg";
 import { navLinks } from "../../constants";
 import { useAuth } from "../../context/AuthProvider";
 import { GrClose, GrMenu } from "react-icons/gr";
@@ -33,7 +31,7 @@ export const NavBar = () => {
   return (
     <nav
       className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 ${
-        scrolled ? "bg-primary" : "bg-transparent"
+        scrolled ? "bg-white" : "bg-transparent"
       }`}
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
@@ -48,7 +46,7 @@ export const NavBar = () => {
           <img src={Logo} alt="logo" className="w-9 h-9 object-contain" />
           <p className="text-[18px] font-bold cursor-pointer flex ">
             Capstone &nbsp;
-            <span className="sm:block hidden"> | Locksmith 2.0</span>
+            <span className="sm:block hidden text-blue-500"> | Locksmith 2.0</span>
           </p>
         </Link>
 
