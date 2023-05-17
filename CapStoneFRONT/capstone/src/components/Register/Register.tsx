@@ -2,21 +2,23 @@ import { useRef, useState, useEffect } from "react";
 import { FaInfoCircle, FaCheck, FaTimes } from "react-icons/fa";
 import axios from "../../api/axios";
 import "./Register.scss";
+import { useNavigate } from "react-router";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 //const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const REGISTER_URL = "/register";
+const REGISTER_URL = "/api/auth/register";
 
 type LoginProps = {
   onLogin: () => void;
 };
 
 export const Register = ({ onLogin }: LoginProps) => {
+  const navigate = useNavigate();
   const userRef = useRef<HTMLInputElement | null>(null);
   const errRef = useRef<HTMLParagraphElement | null>(null);
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [validName, setValidName] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
 
@@ -35,11 +37,11 @@ export const Register = ({ onLogin }: LoginProps) => {
   // userRef.current!.focus();
 
   useEffect(() => {
-    const result = EMAIL_REGEX.test(email);
+    const result = EMAIL_REGEX.test(username);
     console.log(result);
-    console.log(email);
+    console.log(username);
     setValidName(result);
-  }, [email]);
+  }, [username]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(password);
@@ -52,7 +54,7 @@ export const Register = ({ onLogin }: LoginProps) => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [email, password, matchPwd]);
+  }, [username, password, matchPwd]);
 
   const handleClick = () => {
     onLogin();
@@ -60,14 +62,14 @@ export const Register = ({ onLogin }: LoginProps) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const v1 = EMAIL_REGEX.test(email);
+    const v1 = EMAIL_REGEX.test(username);
     const v2 = PWD_REGEX.test(password);
     if (!v1 || !v2) {
       setErrMsg("invalid Entry");
       return;
     }
     try {
-      const response = await axios.post(REGISTER_URL, JSON.stringify({ email, password }), {
+      const response = await axios.post(REGISTER_URL, JSON.stringify({ username, password }), {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
@@ -87,129 +89,133 @@ export const Register = ({ onLogin }: LoginProps) => {
 
   return (
     <>
-      <div className="sub-cont">
-        <div className="img">
-          <div className="img__text m--up">
-            <h2>New here?</h2>
-            <p>Sign up and discover great amount of new opportunities!</p>
+      {success ? (
+        navigate("/profile")
+      ) : (
+        <div className="sub-cont">
+          <div className="img">
+            <div className="img__text m--up">
+              <h2>New here?</h2>
+              <p>Sign up and discover great amount of new opportunities!</p>
+            </div>
+            <div className="img__text m--in">
+              <h2>One of us?</h2>
+              <p>If you already has an account, just sign in. We've missed you!</p>
+            </div>
+            <div className="img__btn" onClick={handleClick}>
+              <span className="m--up">Sign Up</span>
+              <span className="m--in">Sign In</span>
+            </div>
           </div>
-          <div className="img__text m--in">
-            <h2>One of us?</h2>
-            <p>If you already has an account, just sign in. We've missed you!</p>
-          </div>
-          <div className="img__btn" onClick={handleClick}>
-            <span className="m--up">Sign Up</span>
-            <span className="m--in">Sign In</span>
-          </div>
+
+          <section className="RegisterForm sign-up form">
+            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
+              {errMsg}
+            </p>
+            <h1>Time to feel like home,</h1>
+            <form onSubmit={handleSubmit}>
+              {/* ---- Controllo input mail ----*/}
+
+              <label htmlFor="email">
+                <div className="flex justify-center items-center">
+                  <span>Email:</span>
+                  <span className={validName ? "valid" : "hide"}>
+                    <FaCheck />
+                  </span>
+                  <span className={validName || !username ? "hide" : "invalid"}>
+                    <FaTimes />
+                  </span>
+                </div>
+                <input
+                  type="email"
+                  id="email"
+                  ref={userRef}
+                  autoComplete="off"
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  aria-invalid={validName ? "false" : "true"}
+                  aria-describedby="uidnote"
+                  onFocus={() => setUserFocus(true)}
+                  onBlur={() => setUserFocus(false)}
+                />
+              </label>
+              <p id="uidnote" className={userFocus && username && !validName ? "instructions" : "offscreen"}>
+                <FaInfoCircle />
+                Must include @ and a . after.
+              </p>
+
+              {/* ---- Controllo input psw ----*/}
+
+              <label htmlFor="password">
+                <div className="flex justify-center items-center">
+                  <span>Password:</span>
+                  <span className={validPwd ? "valid" : "hide"}>
+                    <FaCheck />
+                  </span>
+                  <span className={validPwd || !password ? "hide" : "invalid"}>
+                    <FaTimes />
+                  </span>
+                </div>
+                <input
+                  type="password"
+                  id="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  aria-invalid={validPwd ? "false" : "true"}
+                  aria-describedby="pwdnote"
+                  onFocus={() => setPwdFocus(true)}
+                  onBlur={() => setPwdFocus(false)}
+                />
+              </label>
+              <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
+                <FaInfoCircle />
+                8 to 24 characters. <br />
+                Must include uppercase and lowercase letters, a number and a special character.
+                <br />
+                Allowed special characters: &nbsp;
+                <span aria-label="excalamtion mark">!</span>
+                <span aria-label="at sumbol">@</span>
+                <span aria-label="hashtag">#</span>
+                <span aria-label="dollar sign">$</span>
+                <span aria-label="percent">%</span>
+              </p>
+
+              {/* ---- Controllo input pswMatch ----*/}
+
+              <label htmlFor="confirm_pwd">
+                <div className="flex items-center justify-center">
+                  <span>Confirm Password:</span>
+                  <span className={validMatch && matchPwd ? "valid" : "hide"}>
+                    <FaCheck />
+                  </span>
+                  <span className={validMatch || !matchPwd ? "hide" : "invalid"}>
+                    <FaTimes />
+                  </span>
+                </div>
+
+                <input
+                  type="password"
+                  id="confirm_pwd"
+                  onChange={(e) => setMatchPwd(e.target.value)}
+                  required
+                  aria-invalid={validMatch ? "false" : "true"}
+                  aria-describedby="confirmnote"
+                  onFocus={() => setMatchFocus(true)}
+                  onBlur={() => setMatchFocus(false)}
+                />
+              </label>
+              <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                <FaInfoCircle />
+                Must match the fisrt password input field.
+              </p>
+
+              <button disabled={!validName || !validPwd || !validMatch ? true : false} className="submit">
+                Sing Up
+              </button>
+            </form>
+          </section>
         </div>
-
-        <section className="RegisterForm sign-up form">
-          <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-            {errMsg}
-          </p>
-          <h1>Time to feel like home,</h1>
-          <form onSubmit={handleSubmit}>
-            {/* ---- Controllo input mail ----*/}
-
-            <label htmlFor="email">
-              <div className="flex justify-center items-center">
-                <span>Email:</span>
-                <span className={validName ? "valid" : "hide"}>
-                  <FaCheck />
-                </span>
-                <span className={validName || !email ? "hide" : "invalid"}>
-                  <FaTimes />
-                </span>
-              </div>
-              <input
-                type="email"
-                id="email"
-                ref={userRef}
-                autoComplete="off"
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                aria-invalid={validName ? "false" : "true"}
-                aria-describedby="uidnote"
-                onFocus={() => setUserFocus(true)}
-                onBlur={() => setUserFocus(false)}
-              />
-            </label>
-            <p id="uidnote" className={userFocus && email && !validName ? "instructions" : "offscreen"}>
-              <FaInfoCircle />
-              Must include @ and a . after.
-            </p>
-
-            {/* ---- Controllo input psw ----*/}
-
-            <label htmlFor="password">
-              <div className="flex justify-center items-center">
-                <span>Password:</span>
-                <span className={validPwd ? "valid" : "hide"}>
-                  <FaCheck />
-                </span>
-                <span className={validPwd || !password ? "hide" : "invalid"}>
-                  <FaTimes />
-                </span>
-              </div>
-              <input
-                type="password"
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                aria-invalid={validPwd ? "false" : "true"}
-                aria-describedby="pwdnote"
-                onFocus={() => setPwdFocus(true)}
-                onBlur={() => setPwdFocus(false)}
-              />
-            </label>
-            <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-              <FaInfoCircle />
-              8 to 24 characters. <br />
-              Must include uppercase and lowercase letters, a number and a special character.
-              <br />
-              Allowed special characters: &nbsp;
-              <span aria-label="excalamtion mark">!</span>
-              <span aria-label="at sumbol">@</span>
-              <span aria-label="hashtag">#</span>
-              <span aria-label="dollar sign">$</span>
-              <span aria-label="percent">%</span>
-            </p>
-
-            {/* ---- Controllo input pswMatch ----*/}
-
-            <label htmlFor="confirm_pwd">
-              <div className="flex items-center justify-center">
-                <span>Confirm Password:</span>
-                <span className={validMatch && matchPwd ? "valid" : "hide"}>
-                  <FaCheck />
-                </span>
-                <span className={validMatch || !matchPwd ? "hide" : "invalid"}>
-                  <FaTimes />
-                </span>
-              </div>
-
-              <input
-                type="password"
-                id="confirm_pwd"
-                onChange={(e) => setMatchPwd(e.target.value)}
-                required
-                aria-invalid={validMatch ? "false" : "true"}
-                aria-describedby="confirmnote"
-                onFocus={() => setMatchFocus(true)}
-                onBlur={() => setMatchFocus(false)}
-              />
-            </label>
-            <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-              <FaInfoCircle />
-              Must match the fisrt password input field.
-            </p>
-
-            <button disabled={!validName || !validPwd || !validMatch ? true : false} className="submit">
-              Sing Up
-            </button>
-          </form>
-        </section>
-      </div>
+      )}
     </>
   );
 };

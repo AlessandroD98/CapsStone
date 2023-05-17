@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService{
         
     	Authentication authentication = authenticationManager.authenticate(
         		new UsernamePasswordAuthenticationToken(
-        				loginDto.getEmail(), loginDto.getPassword()
+        				loginDto.getUsername(), loginDto.getPassword()
         		)
         ); 
     	
@@ -67,19 +67,19 @@ public class AuthServiceImpl implements AuthService{
     public String register(RegisterDto registerDto) {
 
         // add check for username exists in database
-//        if(userRepository.existsByUsername(registerDto.getUsername())){
-//            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
-//        }
-
-        // add check for email exists in database
-        if(userRepository.existsByEmail(registerDto.getEmail())){
-            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
+        if(userRepository.existsByUsername(registerDto.getUsername())){
+            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Username is already exists!.");
         }
 
+        // add check for email exists in database
+//        if(userRepository.existsByEmail(registerDto.getUsername())){
+//            throw new MyAPIException(HttpStatus.BAD_REQUEST, "Email is already exists!.");
+//        }
+
         Cliente user = new Cliente();        
-        user.setEmail(registerDto.getEmail());
+        user.setUsername(registerDto.getUsername());
         user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
-        user.setTelefono(registerDto.getTel());
+       
        
         
 

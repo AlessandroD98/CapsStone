@@ -1,5 +1,5 @@
 import "./Profile.scss";
 
 export const Profile = () => {
-  return <div></div>;
+  return <div>Profilo</div>;
 };

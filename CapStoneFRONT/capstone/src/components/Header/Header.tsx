@@ -16,12 +16,12 @@ export const Header = () => {
       <section className="WelcomeSection">
         <div className={`max-w-7xl mx-auto ${styles.paddingX} flex flex-row items-start gap-5`}>
           <div className="flex flex-col justify-center items-center mt-5">
-            <div className="w-5 h-5 rounded-full bg-blue-500" />
+            <div className="w-5 h-5 rounded-full bg-[#2c1b6c]" />
             <div className="w-1 sm:h-80 h-40 Gradient" />
           </div>
           <div>
             <h1 className={`${styles.heroHeadText} text-black`}>
-              Hi, This is <span className="text-blue-500">Locksmith 2.0</span>
+              Hi, This is <span className="text-[#c51e32]">Locksmith 2.0</span>
             </h1>
             <p className={`${styles.heroSubText} mt-2 text-black text-center`}>
               where tradition and technology come together to provide you with an intelligent security experience.{" "}

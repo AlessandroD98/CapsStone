@@ -2,7 +2,7 @@ import "./NavBar.scss";
 import { styles } from "../../utils/style";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Logo from "../../assets/logo.svg";
+import Logo from "../../assets/nuovologo.png";
 import { navLinks } from "../../constants";
 import { useAuth } from "../../context/AuthProvider";
 import { GrClose, GrMenu } from "react-icons/gr";
@@ -43,10 +43,10 @@ export const NavBar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <img src={Logo} alt="logo" className="w-9 h-9 object-contain" />
+          <img src={Logo} alt="logo" className="w-20 h-9 object-contain" />
           <p className="text-[18px] font-bold cursor-pointer flex ">
             Capstone &nbsp;
-            <span className="sm:block hidden text-blue-500"> | Locksmith 2.0</span>
+            <span className="sm:block hidden text-[#c51e32]"> | Locksmith 2.0</span>
           </p>
         </Link>
 
@@ -55,8 +55,8 @@ export const NavBar = () => {
             <li
               key={nav.id}
               className={`${
-                active === nav.title ? "text-blue-400" : "text-gray-500"
-              } hover:text-blue-400 text-[18px] font-medium cursor-pointer animation`}
+                active === nav.title ? "text-[#2c1b6c]" : "text-gray-500"
+              } hover:text-[#2c1b6c] text-[18px] font-medium cursor-pointer animation`}
               onClick={() => setActive(nav.title)}
             >
               <Link to={`${nav.id}`}>{nav.title}</Link>
@@ -65,8 +65,8 @@ export const NavBar = () => {
           {auth && auth.roles.includes("ROLE_ADMIN") ? (
             <li
               className={`${
-                active === "AdminPage" ? "text-blue-400" : "text-gray-500"
-              } hover:text-blue-400 text-[18px] font-medium cursor-pointer animation`}
+                active === "AdminPage" ? "text-[#2c1b6c]" : "text-gray-500"
+              } hover:text-[#2c1b6c] text-[18px] font-medium cursor-pointer animation`}
               onClick={() => setActive("AdminPage")}
             >
               <Link to={"/adminpage"}>AdminPage</Link>
@@ -77,8 +77,8 @@ export const NavBar = () => {
           {auth && auth.roles.includes("ROLE_USER") ? (
             <li
               className={`${
-                active === "Profile" ? "text-blue-400" : "text-gray-500"
-              } hover:text-blue-400 text-[18px] font-medium cursor-pointer animation`}
+                active === "Profile" ? "text-[#2c1b6c]" : "text-gray-500"
+              } hover:text-[#2c1b6c] text-[18px] font-medium cursor-pointer animation`}
               onClick={() => setActive("Profile")}
             >
               <Link to={"/profile"}>Profile</Link>
@@ -89,12 +89,6 @@ export const NavBar = () => {
         </ul>
 
         <div className="sm:hidden flex flex-1 justify-end items-center">
-          {/* <img
-            src={toggle ? close : menu}
-            alt="menu"
-            className="w-[28px] h-[28px] object-contain"
-            onClick={() => setToggle(!toggle)}
-          /> */}
           {toggle ? (
             <GrClose className="w-[28px] h-[28px] object-contain" onClick={() => setToggle(!toggle)} />
           ) : (

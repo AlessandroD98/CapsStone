@@ -13,7 +13,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterDto {
-	private String email;
+	private String username;
 	private String password;
-	private Long tel;
 }

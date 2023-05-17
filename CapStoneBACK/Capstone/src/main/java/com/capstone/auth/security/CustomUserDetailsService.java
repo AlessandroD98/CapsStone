@@ -3,6 +3,7 @@ package com.capstone.auth.security;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import com.capstone.repository.ClienteRepo;
 
 @Service
 public class CustomUserDetailsService  implements UserDetailsService{
+	
 	   private ClienteRepo userRepository;
 
 	    public CustomUserDetailsService(ClienteRepo userRepository) {
@@ -35,7 +37,7 @@ public class CustomUserDetailsService  implements UserDetailsService{
 	                .stream()
 	                .map((role) -> new SimpleGrantedAuthority(role.getRoleName().toString())).collect(Collectors.toSet());
 
-	        return new org.springframework.security.core.userdetails.User(user.getEmail(),
+	        return new org.springframework.security.core.userdetails.User(user.getUsername(),
 	                user.getPassword(),
 	                authorities);
 	    }

@@ -15,12 +15,12 @@ export const RelatedCard = ({ experience }: Proprs) => {
     <>
       <VerticalTimelineElement
         contentStyle={{
-          background: "#1d1836",
+          background: "#2c1b6c",
           color: "#fff",
           borderRadius: "0.75rem",
         }}
         contentArrowStyle={{ borderRight: "7px solid  #232631" }}
-        iconStyle={{ background: experience.iconBg }}
+        iconStyle={{ background: "#2c1b6c" }}
         icon={
           <div className="flex justify-center items-center w-full h-full">
             <img src={experience.icon} alt={experience.company_name} className="w-[60%] h-[60%] object-contain" />

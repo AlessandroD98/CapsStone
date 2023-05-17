@@ -7,8 +7,8 @@ import { FeedbackCard } from "./FeedBackCard";
 
 const Feedbacks = () => {
   return (
-    <div className={`mt-12 bg-black-100 rounded-[20px]`}>
-      <div className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}>
+    <div className={`mt-12 bg-white rounded-[20px] shadow-lg`}>
+      <div className={`bg-white rounded-2xl ${styles.padding} min-h-[300px]`}>
         <motion.div variants={textVariant(0.1)}>
           <p className={styles.sectionSubText}>What others say</p>
           <h2 className={styles.sectionHeadText}>Testimonials.</h2>

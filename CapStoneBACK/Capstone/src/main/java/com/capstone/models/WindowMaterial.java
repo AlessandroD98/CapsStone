@@ -7,15 +7,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name ="door_materials")
+@Table(name = "window_materials")
 @Setter
 @Getter
-public class DoorMaterials {
+public class WindowMaterial {
 
 	@Id
     private String materialCode;
 	private String material;
 	private Double priceMin;
 	private Double priceMax;
-	
 }

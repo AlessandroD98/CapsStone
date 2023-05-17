@@ -1,10 +1,16 @@
 package com.capstone.models;
 
-import com.capstone.Enums.Lock_Materilas;
+
+
+import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +27,13 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Lock extends Article {
 
-	@Enumerated(EnumType.STRING)
-	Lock_Materilas lockMaterials;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Long id;
+	@ManyToMany
+	@JoinTable(name = "lock_rel_materials",
+	joinColumns = @JoinColumn(name = "lock_id"),
+    inverseJoinColumns = @JoinColumn(name = "material_id"))
+private List<LockMaterial> materials;
 	
 }

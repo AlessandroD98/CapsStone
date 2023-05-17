@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthProvider";
 import axios from "../../api/axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-const LOGIN_URL = "/login";
+const LOGIN_URL = "/api/auth/login";
 
 export const Login = () => {
   const { setAuth } = useAuth();
@@ -16,7 +16,7 @@ export const Login = () => {
   const userRef = useRef<HTMLInputElement | null>(null);
   const errRef = useRef<HTMLInputElement | null>(null);
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
@@ -31,16 +31,17 @@ export const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(LOGIN_URL, JSON.stringify({ email, password }), {
+      const response = await axios.post(LOGIN_URL, JSON.stringify({ username, password }), {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      setAuth({ email, password, roles, accessToken });
-      setEmail("");
+      console.log(response.data);
+      setAuth({ username, password, roles, accessToken });
+      setUsername("");
       setPassword("");
-      navigate(from, { replace: true });
+      navigate("/profile", { replace: true });
     } catch (error: any) {
       if (!error?.response) {
         setErrMsg("No Server Response");
@@ -69,8 +70,8 @@ export const Login = () => {
             id="username"
             ref={userRef}
             autoComplete="off"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            onChange={(e) => setUsername(e.target.value)}
+            value={username}
             required
           />
         </label>

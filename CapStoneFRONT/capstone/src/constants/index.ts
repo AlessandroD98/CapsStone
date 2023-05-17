@@ -2,10 +2,10 @@ import  web from "../assets/web.png";
 import  mobile from "../assets/mobile.png";
 import  backend from "../assets/backend.png";
 import  creator from "../assets/creator.png";
-import isolation from "../assets/isolation.jpeg"
-import smart from "../assets/smart.jpeg"
-import lock from "../assets/lock.jpeg"
-import defence from "../assets/defence.jpeg"
+import isolation from "../assets/isolation.png"
+import smart from "../assets/smart.png"
+import lock from "../assets/lock.png"
+import defence from "../assets/defence.png"
 
 export const navLinks = [
     {

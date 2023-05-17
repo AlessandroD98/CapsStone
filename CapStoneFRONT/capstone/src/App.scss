@@ -4,12 +4,12 @@ body {
 }
 
 .Gradient {
-  background: rgb(6, 182, 212);
+  background: rgb(115, 208, 251);
   background: linear-gradient(
     0deg,
-    rgba(6, 182, 212, 0.09987745098039214) 4%,
-    rgba(6, 182, 212, 1) 42%,
-    rgba(59, 130, 246, 1) 79%
+    rgba(115, 208, 251, 0.09987745098039214) 0%,
+    rgba(107, 136, 210, 1) 32%,
+    rgba(44, 27, 108, 1) 79%
   );
 }
 .green-pink-gradient {
@@ -28,4 +28,18 @@ body {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+.CustomBg {
+  --tw-bg-opacity: 1;
+  background-color: rgb(44 27 108 / var(--tw-bg-opacity));
+}
+.GradientTwo {
+  background: rgb(74, 47, 173);
+  background: linear-gradient(0deg, rgba(74, 47, 173, 0.9430147058823529) 22%, rgba(44, 27, 108, 1) 89%);
+}
+.CustomShadow {
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+.Instagram {
+  background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
 }

@@ -1,0 +1,38 @@
+.Content {
+  input,
+  button,
+  textarea {
+    border: none;
+    outline: none;
+    background: none;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+  }
+
+  label {
+    display: block;
+    width: 260px;
+    margin: 25px auto 0;
+    text-align: center;
+  }
+
+  input,
+  textarea {
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    padding-bottom: 5px;
+    font-size: 16px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    text-align: center;
+  }
+
+  .submit {
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    background: #2c1b6c;
+    text-transform: uppercase;
+    color: white;
+    font-size: 15px;
+  }
+}

@@ -1,10 +1,16 @@
 package com.capstone.models;
 
-import com.capstone.Enums.Window_Materials;
+
+
+import java.util.List;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +27,13 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Window extends Article {
 
-	@Enumerated(EnumType.STRING)
-	private Window_Materials windowMaterial;
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Long id;
+	@ManyToMany
+	@JoinTable(name = "window_rel_materials",
+	joinColumns = @JoinColumn(name = "window_id"),
+    inverseJoinColumns = @JoinColumn(name = "material_id"))
+	private List<WindowMaterial> materials;
 	
 }

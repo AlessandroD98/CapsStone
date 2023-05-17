@@ -33,6 +33,7 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id_cliente;
 private String email;
+private String username;
 private String password;
 private Long telefono;
 @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)

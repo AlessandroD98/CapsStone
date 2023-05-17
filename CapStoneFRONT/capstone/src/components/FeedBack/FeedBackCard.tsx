@@ -13,7 +13,7 @@ type Props = {
 export const FeedbackCard = ({ index, testimonial, name, designation, company, image }: Props) => (
   <motion.div
     variants={fadeIn("", "spring", index * 0.5, 0.75)}
-    className="bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full"
+    className="bg-[#2c1b6c] p-10 rounded-3xl xs:w-[320px] w-full CustomShadow"
   >
     <p className="text-white font-black text-[48px]">"</p>
 
