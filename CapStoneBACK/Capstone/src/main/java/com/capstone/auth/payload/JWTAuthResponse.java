@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.capstone.auth.entity.ERole;
-import com.capstone.auth.entity.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +18,5 @@ public class JWTAuthResponse {
 	private String email;
     private String accessToken;
     private String tokenType = "Bearer";
-    private Set<Role> roles = new HashSet<Role>();
+    private Set<ERole> roles = new HashSet<ERole>();
 }

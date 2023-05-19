@@ -1,5 +1,8 @@
 package com.capstone.auth.controller;
 
+import java.util.List;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +45,9 @@ public class AuthController {
         JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
         jwtAuthResponse.setEmail(loginDto.getUsername());
         jwtAuthResponse.setAccessToken(token);
-        jwtAuthResponse.setRoles(user.getRoles());
+        Set<ERole> list = jwtAuthResponse.getRoles();
+        user.getRoles().forEach(r-> list.add(r.getRoleName()));
+        jwtAuthResponse.setRoles(list);
 
         return ResponseEntity.ok(jwtAuthResponse);
     }

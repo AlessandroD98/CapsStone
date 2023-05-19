@@ -3,7 +3,7 @@ import { FaFacebookSquare, FaGithub, FaTwitter, FaInstagram } from "react-icons/
 
 export const Footer = () => {
   return (
-    <footer className="relative bg-blueGray-200 pt-8 pb-6">
+    <footer className=" bg-blueGray-200 pt-8 pb-6 ">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap text-left lg:text-left">
           <div className="w-full lg:w-6/12 px-4">
@@ -28,7 +28,9 @@ export const Footer = () => {
                 className="bg-white  shadow-lg font-normal h-10 w-10 flex items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                 type="button"
               >
-                <FaInstagram />
+                <a href="https://www.instagram.com/a.dascenzo/">
+                  <FaInstagram />
+                </a>
               </button>
               <a
                 className="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 flex items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"

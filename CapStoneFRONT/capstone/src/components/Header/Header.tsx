@@ -3,9 +3,13 @@ import { Login } from "../Login/Login";
 import { Register } from "../Register/Register";
 import { styles } from "../../utils/style";
 import "./Header.scss";
+import { useAuth } from "../../context/AuthProvider";
+import { Carousel } from "./Carousel";
+import { slides } from "../../constants";
 
 export const Header = () => {
   const [islogged, setIslogged] = useState(true);
+  const { auth } = useAuth();
 
   const handleLogin = () => {
     setIslogged(!islogged);
@@ -37,10 +41,22 @@ export const Header = () => {
       </section>
       {/* Funziona fino a 900px */}
 
-      <div className={islogged ? "cont" : "cont s--signup"}>
-        <Login />
-        <Register onLogin={handleLogin} />
-      </div>
+      {auth ? (
+        <div className="max-w-[900px]">
+          <Carousel
+            autoSlide={true}
+            autoSlideInterval={3000}
+            slides={slides.map((s, i) => (
+              <img key={i} src={s} alt="slide" />
+            ))}
+          />
+        </div>
+      ) : (
+        <div className={islogged ? "cont" : "cont s--signup"}>
+          <Login />
+          <Register onLogin={handleLogin} />
+        </div>
+      )}
     </header>
   );
 };

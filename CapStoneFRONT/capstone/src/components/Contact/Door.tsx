@@ -5,7 +5,7 @@ import { CanvasLoader } from "../Loader/CanvasLoader";
 
 const Door = () => {
   const door = useGLTF("./planet/scene.gltf");
-  return <primitive object={door.scene} scale={2.5} position-y={0} rotation-y={0} />;
+  return <primitive object={door.scene} scale={2} position-y={0} rotation-y={0} />;
 };
 
 const DoorCanvas = () => {
@@ -22,6 +22,7 @@ const DoorCanvas = () => {
         position: [-4, 3, 6],
       }}
     >
+      {/* <ambientLight intensity={1} /> */}
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls autoRotate enableZoom={false} maxPolarAngle={Math.PI / 2} minPolarAngle={Math.PI / 2} />
         <Door />

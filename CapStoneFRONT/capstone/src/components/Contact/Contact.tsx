@@ -7,6 +7,10 @@ import emailjs from "@emailjs/browser";
 import { SectionWrapper } from "../hoc";
 import "./Contact.scss";
 
+const sID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+const tID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+const pKEY = process.env.REACT_APP_EMAILJS_PUBLIC_KEY;
+
 const Contact = () => {
   const formRef = useRef(null);
   const [form, setForm] = useState({
@@ -31,37 +35,37 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
 
-    // emailjs
-    //   .send(
-    //     import.meta.env.VITE_APP_EMAILJS_SERVICE_ID,
-    //     import.meta.env.VITE_APP_EMAILJS_TEMPLATE_ID,
-    //     {
-    //       from_name: form.name,
-    //       to_name: "JavaScript Mastery",
-    //       from_email: form.email,
-    //       to_email: "sujata@jsmastery.pro",
-    //       message: form.message,
-    //     },
-    //     import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
-    //   )
-    //   .then(
-    //     () => {
-    //       setLoading(false);
-    //       alert("Thank you. I will get back to you as soon as possible.");
+    emailjs
+      .send(
+        sID!,
+        tID!,
+        {
+          from_name: form.name,
+          to_name: "Alessandro D'Ascenzo",
+          from_email: form.email,
+          to_email: "alessandro.comunicazioni@gmail.com",
+          message: form.message,
+        },
+        pKEY
+      )
+      .then(
+        () => {
+          setLoading(false);
+          alert("Thank you. I will get back to you as soon as possible.");
 
-    //       setForm({
-    //         name: "",
-    //         email: "",
-    //         message: "",
-    //       });
-    //     },
-    //     (error) => {
-    //       setLoading(false);
-    //       console.error(error);
+          setForm({
+            name: "",
+            email: "",
+            message: "",
+          });
+        },
+        (error) => {
+          setLoading(false);
+          console.error(error);
 
-    //       alert("Ahh, something went wrong. Please try again.");
-    //     }
-    //   );
+          alert("Ahh, something went wrong. Please try again.");
+        }
+      );
   };
 
   return (

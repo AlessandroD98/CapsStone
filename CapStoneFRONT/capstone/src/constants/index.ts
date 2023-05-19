@@ -13,10 +13,6 @@ export const navLinks = [
       title: "Home",
     },
     {
-      id: "/gallery",
-      title: "Gallery",
-    },
-    {
       id: "/preventivo",
       title: "Richiedi Preventivo",
     },
@@ -108,5 +104,7 @@ export const navLinks = [
       image: "https://randomuser.me/api/portraits/women/6.jpg",
     },
   ];
-  
+  export const slides = [
+    "https://picsum.photos/id/5/900/480", "https://picsum.photos/id/241/900/480", "https://picsum.photos/id/100/900/480","https://picsum.photos/id/124/900/480","https://picsum.photos/id/15/900/480"
+  ]
   

@@ -31,7 +31,7 @@ export const NavBar = () => {
   return (
     <nav
       className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 ${
-        scrolled ? "bg-white" : "bg-transparent"
+        scrolled ? "bg-white shadow-lg" : "bg-transparent"
       }`}
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
@@ -39,7 +39,7 @@ export const NavBar = () => {
           to="/"
           className="flex items-center gap-2"
           onClick={() => {
-            setActive("");
+            setActive("Home");
             window.scrollTo(0, 0);
           }}
         >
@@ -63,14 +63,16 @@ export const NavBar = () => {
             </li>
           ))}
           {auth && auth.roles.includes("ROLE_ADMIN") ? (
-            <li
-              className={`${
-                active === "AdminPage" ? "text-[#2c1b6c]" : "text-gray-500"
-              } hover:text-[#2c1b6c] text-[18px] font-medium cursor-pointer animation`}
-              onClick={() => setActive("AdminPage")}
-            >
-              <Link to={"/adminpage"}>AdminPage</Link>
-            </li>
+            <>
+              <li
+                className={`${
+                  active === "AdminPage" ? "text-[#2c1b6c]" : "text-gray-500"
+                } hover:text-[#2c1b6c] text-[18px] font-medium cursor-pointer animation`}
+                onClick={() => setActive("AdminPage")}
+              >
+                <Link to={"/adminpage"}>AdminPage</Link>
+              </li>
+            </>
           ) : (
             ""
           )}
@@ -82,6 +84,16 @@ export const NavBar = () => {
               onClick={() => setActive("Profile")}
             >
               <Link to={"/profile"}>Profile</Link>
+            </li>
+          ) : (
+            ""
+          )}
+          {auth ? (
+            <li
+              className="text-[#ff8190] hover:text-[#c51e32] text-[18px] font-medium cursor-pointer animation"
+              onClick={() => setAuth(null)}
+            >
+              <Link to="">Log out</Link>
             </li>
           ) : (
             ""

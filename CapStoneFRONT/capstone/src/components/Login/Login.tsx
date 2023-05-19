@@ -1,4 +1,3 @@
-import "./Login.scss";
 import { useRef, useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import axios from "../../api/axios";
@@ -7,7 +6,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 const LOGIN_URL = "/api/auth/login";
 
 export const Login = () => {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,6 +41,7 @@ export const Login = () => {
       setUsername("");
       setPassword("");
       navigate("/profile", { replace: true });
+      console.log(auth);
     } catch (error: any) {
       if (!error?.response) {
         setErrMsg("No Server Response");
