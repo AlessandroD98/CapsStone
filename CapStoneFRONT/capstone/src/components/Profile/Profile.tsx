@@ -1,26 +1,121 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import { SectionWrapper } from "../hoc";
 import "./Profile.scss";
+import axios from "../../api/axios";
+import { ICliente, IUpdateUser } from "../../interface/Interface";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { addUser } from "../../store/features/userSlice";
+import { BsFillInfoCircleFill } from "react-icons/bs";
+import { SuccessAlert } from "../Alert/SuccessAlert";
+import { ErrorAlert } from "../Alert/ErrorAlert";
+import { changeErrState, changeState } from "../../store/features/alertControlSlice";
+import { Preventives } from "./Preventives";
 
 const Profile = () => {
   const { auth } = useAuth();
+  const dispatch = useAppDispatch();
+  const alertState = useAppSelector((state) => state.alert.alert);
+  const errState = useAppSelector((state) => state.alert.err);
+
   const [switchPage, setSwitchPage] = useState("details");
+  const [user, setUser] = useState<ICliente>();
+  const [mess, setMess] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [tel, setTel] = useState("");
+  //const [errorAlert, setErrorAlert] = useState(false);
+
+  const handelProfile = async () => {
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${auth?.accessToken}`,
+        },
+      };
+
+      const PROFILE_URL = "/profile/me/" + auth?.username;
+
+      const response = await axios.get(PROFILE_URL, config);
+      console.log(response.data);
+      dispatch(addUser(response.data));
+      setUser(response.data);
+    } catch (error) {
+      alert("Error:" + error);
+    }
+  };
+
+  const handleProfileChange = async () => {
+    try {
+      const PROFILE_CHANGE_URL = "/profile/me/update";
+
+      const response = await axios.post(
+        PROFILE_CHANGE_URL,
+        JSON.stringify({ id: user?.id_cliente, name: name, lastname: lastname, telefono: tel }),
+        {
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth?.accessToken}` },
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      setUser(response.data);
+      dispatch(addUser(response.data));
+      dispatch(changeState(!alertState));
+    } catch (error: any) {
+      setMess(error);
+      dispatch(changeErrState(!errState));
+    }
+  };
+
+  useEffect(() => {
+    handelProfile();
+    if (user !== undefined) {
+      dispatch(addUser(user));
+    }
+    return;
+  }, [name, lastname, tel]);
 
   return (
     <div className="bg-white rounded-xl shadow-xl ps-7">
-      <h1 className="text-left text-xl font-medium  py-8">Settings</h1>
+      <div className="flex py-8">
+        <h1 className="text-left text-xl font-medium flex-[0.5] ">Settings</h1>
+
+        {switchPage === "details" ? (
+          <p
+            className={
+              user?.name === "" || user?.lastname === "" || user?.telefono === null
+                ? "text-blue-900 bg-blue-200 p-2 rounded-lg text-sm flex items-center"
+                : "hidden"
+            }
+          >
+            <span>
+              <BsFillInfoCircleFill className="me-2" />
+            </span>{" "}
+            Complete the registration by adding the missing data!
+          </p>
+        ) : (
+          ""
+        )}
+      </div>
       <main className="flex mainContainer">
         <aside className="px-5">
           <ul>
             <li
-              className="cursor-pointer hover:bg-gray-200 p-2 hover:rounded-lg"
+              className={
+                switchPage === "details"
+                  ? "bg-gray-200 p-2 rounded-lg"
+                  : "cursor-pointer hover:bg-gray-200 p-2 hover:rounded-lg animation"
+              }
               onClick={() => setSwitchPage("details")}
             >
               My details
             </li>
             <li
-              className="cursor-pointer hover:bg-gray-200 p-2 hover:rounded-lg"
+              className={
+                switchPage === "preventives"
+                  ? "bg-gray-200 p-2 rounded-lg"
+                  : "cursor-pointer hover:bg-gray-200 p-2 hover:rounded-lg animation"
+              }
               onClick={() => setSwitchPage("preventives")}
             >
               Preventives
@@ -48,7 +143,9 @@ const Profile = () => {
                     </div>
                     <div className="flex">
                       <button className=" text-blck border border-black w-16 rounded-md me-2 px-2">Cancel</button>
-                      <button className="bg-[#2c1b6c] text-white w-14 rounded-md">Save</button>
+                      <button className="bg-[#2c1b6c] text-white w-14 rounded-md" onClick={handleProfileChange}>
+                        Save
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -59,21 +156,31 @@ const Profile = () => {
               <p className="text-gray-500 text-sm">Update your photo and personal details</p>
             </div>
             <div className="mt-12 inputContainer">
-              <div className="subInput-cont">
+              <div className="subInput-cont-dis">
                 <p>Email</p>
-                <input type="email" className="w-60" />
+                <input defaultValue={user?.email || ""} type="email" className="w-60" disabled />
               </div>
               <div className="subInput-cont">
                 <p>Name</p>
-                <input type="text" className="w-60" />
+                <input
+                  type="text"
+                  className="w-60"
+                  defaultValue={user?.name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               <div className="subInput-cont">
                 <p>Lastname</p>
-                <input type="text" className="w-60" />
+                <input
+                  type="text"
+                  className="w-60"
+                  defaultValue={user?.lastname}
+                  onChange={(e) => setLastname(e.target.value)}
+                />
               </div>
               <div className="subInput-cont">
                 <p>Tel</p>
-                <input type="tel" className="w-60" />
+                <input type="tel" className="w-60" value={user?.telefono} onChange={(e) => setTel(e.target.value)} />
               </div>
               <div className="flex py-4 justify-between">
                 <div className="flex">
@@ -86,16 +193,30 @@ const Profile = () => {
                   </div>
                 </div>
                 <div className="profileModPicButton">
-                  <button className=" hover:bg-gray-200">Delete</button>
-                  <button className=" hover:bg-gray-200">Update</button>
+                  <button className=" hover:bg-gray-200 animation">Delete</button>
+                  <button className=" hover:bg-gray-200 animation">Update</button>
                 </div>
+              </div>
+              <div className="subInput-cont">
+                <p>City</p>
+                <input type="tel" className="w-60" />
+              </div>
+              <div className="subInput-cont">
+                <p>Address</p>
+                <input type="tel" className="w-60" />
+              </div>
+              <div className="subInput-cont">
+                <p>Zip Code</p>
+                <input type="tel" className="w-60" />
               </div>
             </div>
           </section>
         ) : (
-          ""
+          <Preventives />
         )}
       </main>
+      {alertState ? <SuccessAlert /> : ""}
+      {errState ? <ErrorAlert msg={mess} /> : ""}
     </div>
   );
 };

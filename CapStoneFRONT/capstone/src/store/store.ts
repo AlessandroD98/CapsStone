@@ -1,9 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { userSlice } from './features/userSlice';
+import { alertControlSlice } from './features/alertControlSlice'
 
 
 export const store = configureStore({
   reducer: {
-   
+   user: userSlice.reducer,
+   alert: alertControlSlice.reducer,
   },
 });
 

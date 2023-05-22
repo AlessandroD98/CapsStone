@@ -32,6 +32,8 @@ public class Cliente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 private Long id_cliente;
+private String name;
+private String lastname;
 private String email;
 private String username;
 private String password;

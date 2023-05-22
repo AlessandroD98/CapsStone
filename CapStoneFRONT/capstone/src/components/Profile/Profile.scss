@@ -7,6 +7,7 @@
     li {
       font-weight: bold;
       font-size: 0.9rem;
+      margin-bottom: 5px;
     }
   }
 
@@ -38,6 +39,32 @@
         border: 1px solid lightgray;
         padding: 0.4rem;
         text-align: left;
+        font-size: 0.9rem;
+      }
+      p {
+        width: 10rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    .subInput-cont-dis {
+      display: flex;
+      padding: 1rem 0;
+      border-bottom: 1px solid lightgray;
+      align-items: center;
+
+      @media (max-width: 610px) {
+        justify-content: space-evenly;
+      }
+
+      input {
+        border-radius: 10px;
+        border: 1px solid lightgray;
+        padding: 0.4rem;
+        text-align: left;
+        background-color: rgb(236, 236, 236);
+        color: rgb(134, 134, 134);
+        font-size: 0.9rem;
       }
       p {
         width: 10rem;

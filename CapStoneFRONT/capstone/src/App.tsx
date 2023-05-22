@@ -5,11 +5,12 @@ import { RequiredAuth } from "./components/RequiredAuth/RequiredAuth";
 import Profile from "./components/Profile/Profile";
 import { AdminPage } from "./components/AdminPage/AdminPage";
 import { Home } from "./components/Home/Home";
-import { Preventivo } from "./components/Preventivo/Preventivo";
+import Preventivo from "./components/Preventivo/Preventivo";
 import { Gallery } from "./components/Gallery/Gallery";
 import { NavBar } from "./components/NavBar/NavBar";
 import NotFound from "./components/NotFound/NotFound";
 import { Footer } from "./components/Footer/Footer";
+import RegisterSucces from "./components/RegisterSucces";
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
 
         <Route path="/" element={<Home />} />
         <Route path="/preventivo" element={<Preventivo />} />
-        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/registersuccss" element={<RegisterSucces />} />
 
         <Route element={<RequiredAuth allowedRoles={["ROLE_USER"]} />}>
           <Route path="/profile" element={<Profile />} />

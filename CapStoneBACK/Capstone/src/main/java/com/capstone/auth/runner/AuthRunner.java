@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.capstone.auth.entity.ERole;
 import com.capstone.auth.entity.Role;
 import com.capstone.auth.service.AuthService;
+import com.capstone.models.Cliente;
 import com.capstone.repository.ClienteRepo;
 import com.capstone.repository.RoleRepository;
 
@@ -35,6 +36,10 @@ public class AuthRunner implements ApplicationRunner{
 	public void run(ApplicationArguments args) throws Exception {
 		System.out.println("Run...");
 //setRoleDefault();
+//		Cliente c = userRepository.findById(7l).get();
+//		Role r = roleRepository.findById(1l).get();
+//		c.getRoles().add(r);
+//		userRepository.save(c);
 		
 
 	}

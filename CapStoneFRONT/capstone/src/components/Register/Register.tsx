@@ -74,9 +74,10 @@ export const Register = ({ onLogin }: LoginProps) => {
         withCredentials: true,
       });
       console.log(response.data);
-      setSuccess(true);
+      //setSuccess(true);
+      navigate("/registersuccss", { replace: true });
     } catch (error: any) {
-      if (!error?.response) {
+      if (error?.response) {
         setErrMsg("No server response");
       } else if (error.response?.status === 500) {
         setErrMsg("Email already Registered");

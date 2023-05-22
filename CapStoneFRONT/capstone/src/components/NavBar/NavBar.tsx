@@ -6,8 +6,11 @@ import Logo from "../../assets/nuovologo.png";
 import { navLinks } from "../../constants";
 import { useAuth } from "../../context/AuthProvider";
 import { GrClose, GrMenu } from "react-icons/gr";
+import { useAppSelector } from "../../store/hooks";
 
 export const NavBar = () => {
+  const user = useAppSelector((state) => state.user.user);
+
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -79,11 +82,18 @@ export const NavBar = () => {
           {auth && auth.roles.includes("ROLE_USER") ? (
             <li
               className={`${
-                active === "Profile" ? "text-[#2c1b6c]" : "text-gray-500"
+                active === "Profile" ? "text-[#2c1b6c] flex items-center" : "text-gray-500 flex items-center"
               } hover:text-[#2c1b6c] text-[18px] font-medium cursor-pointer animation`}
               onClick={() => setActive("Profile")}
             >
               <Link to={"/profile"}>Profile</Link>
+              <div
+                className={
+                  user?.name === "" || user?.lastname === "" || user?.telefono === null
+                    ? "w-2 h-2 bg-[#c51e32] rounded-full ms-1 animate-pulse"
+                    : "hidden"
+                }
+              ></div>
             </li>
           ) : (
             ""

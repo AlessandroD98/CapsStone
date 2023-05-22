@@ -40,6 +40,7 @@ export const Carousel = ({ slides, autoSlide, autoSlideInterval }: Props) => {
         <div className="flex items-center justify-center gap-2">
           {slides.map((_, i) => (
             <div
+              key={i}
               className={`
               transition-all w-3 h-3 bg-white rounded-full
               ${curr === i ? "p-2" : "bg-opacity-50"}
