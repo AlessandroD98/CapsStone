@@ -1,12 +1,17 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { userSlice } from './features/userSlice';
 import { alertControlSlice } from './features/alertControlSlice'
+import { preventivoSlice } from './features/preventivoSlice';
+import { prevInputCheck } from './features/prevInputCheck';
+
 
 
 export const store = configureStore({
   reducer: {
    user: userSlice.reducer,
    alert: alertControlSlice.reducer,
+   preventiveS: preventivoSlice.reducer,
+   checkS : prevInputCheck.reducer
   },
 });
 

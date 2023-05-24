@@ -119,8 +119,8 @@ export const NavBar = () => {
 
           <div
             className={`${
-              !toggle ? "hidden" : "flex"
-            } p-6 bg-black absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl`}
+              !toggle ? "top-[-300%]" : "flex top-20"
+            } p-6 bg-white absolute shadow-lg right-0 mx-auto my-2 w-full z-10 animation`}
           >
             <ul className="list-none flex justify-end items-start flex-1 flex-col gap-4">
               {navLinks.map((nav) => (
@@ -137,6 +137,55 @@ export const NavBar = () => {
                   <Link to={`${nav.id}`}>{nav.title}</Link>
                 </li>
               ))}
+              {auth && auth.roles.includes("ROLE_ADMIN") ? (
+                <>
+                  <li
+                    className={`${
+                      active === "AdminPage" ? "text-[#2c1b6c]" : "text-gray-500"
+                    } hover:text-[#2c1b6c] text-[18px] font-medium cursor-pointer animation`}
+                    onClick={() => {
+                      setActive("AdminPage");
+                      setToggle(!toggle);
+                    }}
+                  >
+                    <Link to={"/adminpage"}>AdminPage</Link>
+                  </li>
+                </>
+              ) : (
+                ""
+              )}
+              {auth && auth.roles.includes("ROLE_USER") ? (
+                <li
+                  className={`${
+                    active === "Profile" ? "text-[#2c1b6c] flex items-center" : "text-gray-500 flex items-center"
+                  } hover:text-[#2c1b6c] text-[18px] font-medium cursor-pointer animation`}
+                  onClick={() => {
+                    setActive("Profile");
+                    setToggle(!toggle);
+                  }}
+                >
+                  <Link to={"/profile"}>Profile</Link>
+                  <div
+                    className={
+                      user?.name === "" || user?.lastname === "" || user?.telefono === null
+                        ? "w-2 h-2 bg-[#c51e32] rounded-full ms-1 animate-pulse"
+                        : "hidden"
+                    }
+                  ></div>
+                </li>
+              ) : (
+                ""
+              )}
+              {auth ? (
+                <li
+                  className="text-[#ff8190] hover:text-[#c51e32] text-[18px] font-medium cursor-pointer animation"
+                  onClick={() => setAuth(null)}
+                >
+                  <Link to="">Log out</Link>
+                </li>
+              ) : (
+                ""
+              )}
             </ul>
           </div>
         </div>
