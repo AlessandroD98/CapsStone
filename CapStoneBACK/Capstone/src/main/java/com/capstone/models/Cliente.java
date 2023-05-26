@@ -42,4 +42,7 @@ private Long telefono;
 private Set<Role> roles = new HashSet<>();
 @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 private List<Preventive> preventives;
+private String address;
+private String city;
+private String zipCode;
 }

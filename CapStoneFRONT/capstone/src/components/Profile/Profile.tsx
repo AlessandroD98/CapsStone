@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthProvider";
 import { SectionWrapper } from "../hoc";
 import "./Profile.scss";
 import axios from "../../api/axios";
-import { ICliente, IUpdateUser } from "../../interface/Interface";
+import { ICliente } from "../../interface/Interface";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { addUser } from "../../store/features/userSlice";
 import { BsFillInfoCircleFill } from "react-icons/bs";
@@ -17,14 +17,21 @@ const Profile = () => {
   const dispatch = useAppDispatch();
   const alertState = useAppSelector((state) => state.alert.alert);
   const errState = useAppSelector((state) => state.alert.err);
+  const user = useAppSelector((state) => state.user.user);
 
   const [switchPage, setSwitchPage] = useState("details");
-  const [user, setUser] = useState<ICliente>();
   const [mess, setMess] = useState("");
+
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
-  const [tel, setTel] = useState("");
-  //const [errorAlert, setErrorAlert] = useState(false);
+  const [tel, setTel] = useState(0);
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [zipCode, setZipCode] = useState("");
+
+  useEffect(() => {
+    handelProfile();
+  }, []);
 
   const handelProfile = async () => {
     try {
@@ -37,9 +44,19 @@ const Profile = () => {
       const PROFILE_URL = "/profile/me/" + auth?.username;
 
       const response = await axios.get(PROFILE_URL, config);
+      console.log("GET");
       console.log(response.data);
-      dispatch(addUser(response.data));
-      setUser(response.data);
+      const savedUser: ICliente = response.data;
+      console.log(savedUser.zipCode);
+      dispatch(addUser(savedUser));
+      if (savedUser !== null) {
+        setName(savedUser.name);
+        setLastname(savedUser.lastname);
+        setAddress(savedUser.address);
+        setCity(savedUser.city);
+        setTel(savedUser.telefono);
+        setZipCode(savedUser.zipCode);
+      }
     } catch (error) {
       alert("Error:" + error);
     }
@@ -51,16 +68,25 @@ const Profile = () => {
 
       const response = await axios.post(
         PROFILE_CHANGE_URL,
-        JSON.stringify({ id: user?.id_cliente, name: name, lastname: lastname, telefono: tel }),
+        JSON.stringify({
+          id: user?.id_cliente,
+          name: name,
+          lastname: lastname,
+          telefono: tel,
+          city,
+          address,
+          zipCode: zipCode,
+        }),
         {
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth?.accessToken}` },
           withCredentials: true,
         }
       );
       console.log(response.data);
-      setUser(response.data);
+
       dispatch(addUser(response.data));
       dispatch(changeState(!alertState));
+      handelProfile();
     } catch (error: any) {
       setMess(error);
       dispatch(changeErrState(!errState));
@@ -68,12 +94,23 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    handelProfile();
-    if (user !== undefined) {
-      dispatch(addUser(user));
+    if (user !== undefined && user !== null) {
+      setName(user.name || "");
+      setLastname(user.lastname || "");
+      setAddress(user.address || "");
+      setCity(user.city || "");
+      setTel(user.telefono || 0);
+      setZipCode(user.zipCode || "");
+      console.log("useSelecto" + user?.zipCode);
+      console.log("useState" + zipCode);
     }
-    return;
-  }, [name, lastname, tel]);
+  }, [user]);
+
+  const handlePhoneNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    const numericValue = value !== "" ? parseInt(value, 10) : 0;
+    setTel(numericValue);
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-xl ps-7">
@@ -83,7 +120,12 @@ const Profile = () => {
         {switchPage === "details" ? (
           <p
             className={
-              user?.name === "" || user?.lastname === "" || user?.telefono === null
+              user?.name === "" ||
+              user?.lastname === "" ||
+              user?.telefono === null ||
+              user?.city === ("" || null) ||
+              user?.address === ("" || null) ||
+              user?.zipCode === ("" || null)
                 ? "text-blue-900 bg-blue-200 p-2 rounded-lg text-sm flex items-center"
                 : "hidden"
             }
@@ -158,29 +200,19 @@ const Profile = () => {
             <div className="mt-12 inputContainer">
               <div className="subInput-cont-dis">
                 <p>Email</p>
-                <input defaultValue={user?.email || ""} type="email" className="w-60" disabled />
+                <input value={user?.email} type="email" className="w-60" disabled />
               </div>
               <div className="subInput-cont">
                 <p>Name</p>
-                <input
-                  type="text"
-                  className="w-60"
-                  defaultValue={user?.name}
-                  onChange={(e) => setName(e.target.value)}
-                />
+                <input type="text" className="w-60" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
               <div className="subInput-cont">
                 <p>Lastname</p>
-                <input
-                  type="text"
-                  className="w-60"
-                  defaultValue={user?.lastname}
-                  onChange={(e) => setLastname(e.target.value)}
-                />
+                <input type="text" className="w-60" value={lastname} onChange={(e) => setLastname(e.target.value)} />
               </div>
               <div className="subInput-cont">
                 <p>Tel</p>
-                <input type="tel" className="w-60" value={user?.telefono} onChange={(e) => setTel(e.target.value)} />
+                <input type="tel" className="w-60" value={tel} onChange={handlePhoneNumberChange} />
               </div>
               <div className="flex py-4 justify-between">
                 <div className="flex">
@@ -199,15 +231,15 @@ const Profile = () => {
               </div>
               <div className="subInput-cont">
                 <p>City</p>
-                <input type="tel" className="w-60" />
+                <input type="text" className="w-60" value={city} onChange={(e) => setCity(e.target.value)} />
               </div>
               <div className="subInput-cont">
                 <p>Address</p>
-                <input type="tel" className="w-60" />
+                <input type="text" className="w-60" value={address} onChange={(e) => setAddress(e.target.value)} />
               </div>
               <div className="subInput-cont">
                 <p>Zip Code</p>
-                <input type="tel" className="w-60" />
+                <input type="text" className="w-60" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
               </div>
             </div>
           </section>

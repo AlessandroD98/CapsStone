@@ -84,15 +84,15 @@ export const navLinks = [
       "Fast and reliable service, the locksmith fixed my broken lock in no time. Highly recommended!",
       name: "Sara Lee",
       designation: "CFO",
-      company: "Acme Co",
+      company: "McDonald's.",
       image: "https://randomuser.me/api/portraits/women/4.jpg",
     },
     {
       testimonial:
       "Professional and efficient locksmith, arrived promptly and solved my lockout situation with ease. Great service!",
-      name: "Chris Brown",
+      name: "Pino",
       designation: "COO",
-      company: "DEF Corp",
+      company: "Epicode",
       image: "https://randomuser.me/api/portraits/men/5.jpg",
     },
     {
@@ -100,7 +100,7 @@ export const navLinks = [
       "Excellent craftsmanship and attention to detail. The locksmith installed a new high-security lock with precision. Very satisfied with the results!",
       name: "Lisa Wang",
       designation: "CTO",
-      company: "456 Enterprises",
+      company: "Daje Roma Daje",
       image: "https://randomuser.me/api/portraits/women/6.jpg",
     },
   ];

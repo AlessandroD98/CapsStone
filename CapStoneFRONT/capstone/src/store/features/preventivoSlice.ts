@@ -9,14 +9,14 @@ preventive : IPreventive
 const initialState: prevState = {
     preventive : {
         articles: [],
-        inspectionDate: new Date(),
+        inspectionDate: "",
         cliente:{
             name: "",
             lastname:"",
             email: "",
             tel: 0,
             city: "",
-            zipcode: 0,
+            zipCode: "",
             address: "", 
         },
         description: "",
@@ -40,4 +40,4 @@ export const preventivoSlice = createSlice({
 })
 
 export default preventivoSlice.reducer
-export const { addPrev} = preventivoSlice.actions
+export const { addPrev, addCliente, addArticles } = preventivoSlice.actions

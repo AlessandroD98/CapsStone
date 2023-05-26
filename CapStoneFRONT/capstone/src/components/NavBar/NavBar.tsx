@@ -167,7 +167,12 @@ export const NavBar = () => {
                   <Link to={"/profile"}>Profile</Link>
                   <div
                     className={
-                      user?.name === "" || user?.lastname === "" || user?.telefono === null
+                      user?.name === "" ||
+                      user?.lastname === "" ||
+                      user?.telefono === null ||
+                      user?.city === ("" || null) ||
+                      user?.address === ("" || null) ||
+                      user?.zipCode === ("" || null)
                         ? "w-2 h-2 bg-[#c51e32] rounded-full ms-1 animate-pulse"
                         : "hidden"
                     }

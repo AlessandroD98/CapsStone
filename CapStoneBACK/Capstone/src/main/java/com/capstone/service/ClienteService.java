@@ -23,6 +23,9 @@ public class ClienteService {
 		cl.setName(c.getName());
 		cl.setLastname(c.getLastname());
 		cl.setTelefono(c.getTelefono());
+		cl.setAddress(c.getAddress());
+		cl.setCity(c.getCity());
+		cl.setZipCode(c.getZipCode());
 		repo.save(cl);
 		return cl;
 	}

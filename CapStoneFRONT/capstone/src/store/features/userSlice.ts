@@ -6,7 +6,7 @@ user: ICliente | null
 }
 
 const initialState: userState = {
-    user: null,
+    user: {} as ICliente,
 }
 
 export const userSlice = createSlice({

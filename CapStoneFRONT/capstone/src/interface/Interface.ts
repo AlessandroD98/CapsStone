@@ -1,5 +1,3 @@
-import { input } from "@material-tailwind/react"
-
 export interface IUser {
     username: string,
     password: string,
@@ -22,6 +20,9 @@ export interface ICliente {
     roles: IRole[]
     telefono: number
     username: string
+    address: string
+    city: string
+    zipCode: string
 }
 
 export interface IUpdateUser {
@@ -50,7 +51,7 @@ export interface IArticle {
 
 export interface IPreventive {
 articles: IArticle[]
-inspectionDate: Date,
+inspectionDate: "",
 cliente: IPrevUser,
 description: string,
 }
@@ -61,7 +62,7 @@ export interface IPrevUser {
     email: string,
     tel: number,
     city: string,
-    zipcode: number,
+    zipCode: string,
     address: string,
 }
 

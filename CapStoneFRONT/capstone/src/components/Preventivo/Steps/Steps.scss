@@ -1,4 +1,5 @@
 .anagraficaCont {
+  margin-top: 2rem;
   .input {
     display: flex;
     flex-direction: column-reverse;
@@ -38,6 +39,42 @@
       }
     }
   }
+
+  .checkedInput {
+    outline: 0;
+    border-bottom: 2px solid #2c1b6c;
+    color: rgb(141, 141, 141);
+    font-size: 1.125rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.2rem;
+    text-align: start;
+  }
+  .checkedLabel {
+    text-align: start;
+    color: #2c1b6c;
+    transform: translateY(-1.5rem);
+    transition: 0.25s ease;
+    position: absolute;
+  }
+
+  .alertInput {
+    outline: 0;
+    border-bottom: 2px solid rgb(190, 8, 8);
+    color: rgb(190, 8, 8);
+    font-size: 1.125rem;
+    padding-top: 0.8rem;
+    padding-bottom: 0.2rem;
+    text-align: start;
+  }
+
+  .alertLabel {
+    text-align: start;
+    color: rgb(190, 8, 8);
+    transform: translateY(-1.5rem);
+    transition: 0.25s ease;
+    position: absolute;
+  }
+
   h3 {
     font-weight: 400;
   }
