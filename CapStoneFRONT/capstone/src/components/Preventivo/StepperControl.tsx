@@ -17,6 +17,12 @@ export const StepperControl = ({ handleClick, steps, currentStep }: Props) => {
         return checks.article;
       case 3:
         return checks.timing;
+      case 4:
+        return checks.dimension;
+      case 5:
+        return checks.material;
+      case 6:
+        return checks.summary;
       default:
     }
   };
@@ -35,7 +41,7 @@ export const StepperControl = ({ handleClick, steps, currentStep }: Props) => {
       </button>
       <button
         disabled={!currentCheck?.inputs}
-        onClick={() => handleClick("next")}
+        onClick={() => handleClick(currentStep === steps.length ? "confirm" : "next")}
         className={` uppercase w-24 h-10 py-2  rounded-xl font-semibold cursor-pointer  ${
           currentCheck?.inputs
             ? "bg-green-500 text-white  hover:bg-slate-700 hover:text-white transition duration-200 ease-in-out"

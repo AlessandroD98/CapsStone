@@ -108,3 +108,9 @@ export const navLinks = [
     "https://picsum.photos/id/5/900/480", "https://picsum.photos/id/241/900/480", "https://picsum.photos/id/100/900/480","https://picsum.photos/id/124/900/480","https://picsum.photos/id/15/900/480"
   ]
   
+export const checkBoxList = {
+  door : "selectDoor",
+  window : "selectWindow",
+  lock : "selectLock",
+  other : "selectOther"
+}

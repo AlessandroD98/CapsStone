@@ -20,11 +20,18 @@ export const Stepper = ({ steps, currentStep }: Props) => {
         return checks.article;
       case 3:
         return checks.timing;
+      case 4:
+        return checks.dimension;
+      case 5:
+        return checks.material;
+      case 6:
+        return checks.summary;
       default:
     }
   };
 
-  const currentCheck = setCheck(currentStep);
+  //const currentCheck = setCheck(currentStep);
+  //console.log(currentCheck);
 
   const updateStep = (stepNumber: number, steps: IStep[]) => {
     const newSteps = [...steps];
@@ -83,10 +90,12 @@ export const Stepper = ({ steps, currentStep }: Props) => {
         <div className="relative flex flex-col items-center text-teal-600">
           <div
             className={`rounded-full transition duration-500 ease-in-out border-2 border-gray-300 h-12 w-12 flex items-center justify-center py-3 ${
-              step.selected && currentCheck?.inputs ? "bg-green-600 text-white font-bold border border-green-600" : ""
+              step.selected && setCheck(i + 1)?.inputs
+                ? "bg-green-600 text-white font-bold border border-green-600"
+                : ""
             }`}
           >
-            {step.completed && currentCheck?.inputs ? (
+            {step.completed && setCheck(i + 1)?.inputs ? (
               <span className="text-white font-bold text-xl">&#10003;</span>
             ) : (
               i + 1
@@ -102,7 +111,7 @@ export const Stepper = ({ steps, currentStep }: Props) => {
         </div>
         <div
           className={`flex-auto border-t-2 transition duration-500 ease-in-out ${
-            step.completed && currentCheck?.inputs ? "border-green-600" : "border-gray-300"
+            step.completed && setCheck(i + 1)?.inputs ? "border-green-600" : "border-gray-300"
           }`}
         ></div>
       </div>

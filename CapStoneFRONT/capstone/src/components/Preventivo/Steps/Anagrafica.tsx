@@ -6,6 +6,7 @@ import { checkAnagrafica } from "../../../store/features/prevInputCheck";
 
 export const Anagrafica = () => {
   const user = useAppSelector((state) => state.user.user);
+  //const prevCliente = useAppSelector((state) => state.preventiveS.preventive.cliente);
   const dispatch = useAppDispatch();
 
   const [data, setData] = useState({
@@ -44,44 +45,44 @@ export const Anagrafica = () => {
 
   useEffect(() => {
     if (data.sameAsProfile && user !== null) {
-      setData({
+      setData((prevData) => ({
+        ...prevData,
         nameData: user.name,
         lastNameData: user.lastname,
         emailData: user.email,
         cityData: user.city ? user.city : "No City value check Profile",
         addressData: user.address ? user.address : "No Address value check Profile",
         zipCodeData: user.zipCode ? user.zipCode : "No Zip Code value check Profile",
-        sameAsProfile: true,
-      });
+      }));
     } else {
-      setData({
+      setData((prevData) => ({
+        ...prevData,
         nameData: "",
         lastNameData: "",
         emailData: "",
         cityData: "",
         addressData: "",
         zipCodeData: "",
-        sameAsProfile: false,
-      });
+      }));
     }
   }, [data.sameAsProfile]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.checked;
-    setData({
-      ...data,
+    setData((prevData) => ({
+      ...prevData,
       sameAsProfile: value,
-    });
+    }));
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setData({
-      ...data,
+    setData((prevData) => ({
+      ...prevData,
       [name]: value,
-    });
+    }));
   };
 
   const handleLabelClassName = (current: string, arg2: string) => {
@@ -106,11 +107,12 @@ export const Anagrafica = () => {
 
   return (
     <>
-      <header className="my-0 text-center">
+      <header className="my-0 flex flex-col items-center justify-center">
         <h2 className="font-bold text-2xl mb-4">Contact information</h2>
         {user && user.name && user.lastname ? (
-          <label htmlFor="sameAsProfile">
+          <label htmlFor="sameAsProfile" className="flex justify-center">
             <input
+              className="w-4 me-3"
               type="checkbox"
               id="sameAsProfile"
               name="sameAsProfile"
@@ -123,7 +125,7 @@ export const Anagrafica = () => {
           ""
         )}
       </header>
-      <main className="flex justify-evenly">
+      <main className="flex justify-evenly anagraficaMain">
         <section className="anagraficaCont">
           <h3>Details</h3>
           <div className="input">

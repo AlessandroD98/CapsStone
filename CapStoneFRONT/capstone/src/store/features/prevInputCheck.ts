@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
-import { IProfileCheck, IArticleCheck, ICheck } from "../../interface/Interface"
+import { IProfileCheck, IArticleCheck, ICheck, ITimingCheck } from "../../interface/Interface"
 
 
 interface prevInput {
@@ -17,6 +17,15 @@ checks : {
     },
     timing: {
         inputs : false
+    },
+    dimension : {
+        inputs : true
+    },
+    material: {
+        inputs: true
+    },
+    summary: {
+        inputs: true
     }
 }, 
 }
@@ -31,9 +40,12 @@ export const prevInputCheck = createSlice({
         checkArticle : (state, action:PayloadAction<IArticleCheck>) => {
             state.checks.article = action.payload
         },
+        checkTiming : (state, action:PayloadAction<ITimingCheck>)=> {
+            state.checks.timing = action.payload
+        }
     
     }
 })
 
 export default prevInputCheck.reducer
-export const { checkAnagrafica,checkArticle } = prevInputCheck.actions
+export const { checkAnagrafica,checkArticle, checkTiming } = prevInputCheck.actions

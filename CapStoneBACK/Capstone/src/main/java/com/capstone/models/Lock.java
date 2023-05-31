@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,10 +31,13 @@ public class Lock extends Article {
 //	@Id
 //	@GeneratedValue(strategy = GenerationType.IDENTITY)
 //	private Long id;
-	@ManyToMany
-	@JoinTable(name = "lock_rel_materials",
-	joinColumns = @JoinColumn(name = "lock_id"),
-    inverseJoinColumns = @JoinColumn(name = "material_id"))
-private List<LockMaterial> materials;
+//	@ManyToMany
+//	@JoinTable(name = "lock_rel_materials",
+//	joinColumns = @JoinColumn(name = "lock_id"),
+//    inverseJoinColumns = @JoinColumn(name = "material_id"))
+//private List<LockMaterial> materials;
 	
+	@OneToOne
+    @JoinColumn(name = "material_id")
+    private LockMaterial material;
 }

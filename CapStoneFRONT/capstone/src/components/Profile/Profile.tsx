@@ -44,10 +44,7 @@ const Profile = () => {
       const PROFILE_URL = "/profile/me/" + auth?.username;
 
       const response = await axios.get(PROFILE_URL, config);
-      console.log("GET");
-      console.log(response.data);
       const savedUser: ICliente = response.data;
-      console.log(savedUser.zipCode);
       dispatch(addUser(savedUser));
       if (savedUser !== null) {
         setName(savedUser.name);
@@ -82,7 +79,6 @@ const Profile = () => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
 
       dispatch(addUser(response.data));
       dispatch(changeState(!alertState));
@@ -101,8 +97,6 @@ const Profile = () => {
       setCity(user.city || "");
       setTel(user.telefono || 0);
       setZipCode(user.zipCode || "");
-      console.log("useSelecto" + user?.zipCode);
-      console.log("useState" + zipCode);
     }
   }, [user]);
 

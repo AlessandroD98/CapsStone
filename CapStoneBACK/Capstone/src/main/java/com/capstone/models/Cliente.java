@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.capstone.auth.entity.Role;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -40,6 +41,7 @@ private String password;
 private Long telefono;
 @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 private Set<Role> roles = new HashSet<>();
+@JsonManagedReference
 @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
 private List<Preventive> preventives;
 private String address;

@@ -34,7 +34,7 @@ const Contact = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-
+    console.log(sID, tID, pKEY);
     emailjs
       .send(
         sID!,

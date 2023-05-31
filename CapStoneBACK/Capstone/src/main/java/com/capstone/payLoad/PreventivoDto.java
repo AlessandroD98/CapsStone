@@ -1,10 +1,11 @@
 package com.capstone.payLoad;
 
-import java.time.LocalDate;
 import java.util.List;
 
 
 import com.capstone.models.Article;
+import com.capstone.models.Cliente;
+import com.capstone.models.Hour;
 
 import lombok.Getter;
 
@@ -12,9 +13,9 @@ import lombok.Getter;
 @Getter
 public class PreventivoDto {
 
-	private LocalDate dataRichiesta;
+	private String inspectionDate;
+	private Hour inspectionHour;
 	private String description;
-	private Double total;
 	private List<Article> articles;
-	
+	private Cliente cliente;
 }

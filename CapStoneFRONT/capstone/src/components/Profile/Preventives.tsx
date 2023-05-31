@@ -1,7 +1,15 @@
 import { useAppSelector } from "../../store/hooks";
 
 export const Preventives = () => {
-  const user = useAppSelector((state) => state.user.user);
+  const preventivi = useAppSelector((state) => state.user.user?.preventives);
 
-  return <div>{user?.preventives.length === 0 ? <p>Non hai nessun Preventivo</p> : ""}</div>;
+  return (
+    <div>
+      {preventivi !== null && preventivi?.length === 0 ? (
+        <p>Non hai nessun Preventivo</p>
+      ) : (
+        preventivi?.map((prev, i) => <div key={i}>{prev.state}</div>)
+      )}
+    </div>
+  );
 };

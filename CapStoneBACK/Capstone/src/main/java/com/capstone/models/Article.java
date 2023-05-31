@@ -1,6 +1,8 @@
 package com.capstone.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,17 +19,19 @@ import lombok.ToString;
 @ToString
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Article {
+public class Article {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String nomeArticolo;
-	private Double price;
+	//private String nameArticle;
+	//private Double price;
 	private Double height;
 	private Double witdh;
 	private Double thickness;
+	private String type;
 	@ManyToOne
+	@JsonBackReference
 	private Preventive preventive;
 	
 }

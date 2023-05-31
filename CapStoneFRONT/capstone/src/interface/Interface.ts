@@ -16,7 +16,7 @@ export interface ICliente {
     email: string,
     id_cliente: number,
     password: string,
-    preventives: String[]
+    preventives: IPreventive[]
     roles: IRole[]
     telefono: number
     username: string
@@ -40,20 +40,21 @@ export interface IStep {
   }
 
 export interface IArticle {
-    id: number,
-    nameArticle: string,
-    price: number,
     height: number,
     width: number,
     thickness: number,
     type: string,
+    material: IMaterial | IMaterialLock | null;
 } 
 
 export interface IPreventive {
 articles: IArticle[]
-inspectionDate: "",
+inspectionDate: string,
+inspectionHour: IHour,
 cliente: IPrevUser,
 description: string,
+state: string
+
 }
 
 export interface IPrevUser {
@@ -70,6 +71,9 @@ export interface ICheck {
     profile : IProfileCheck
     article : IArticleCheck
     timing : ITimingCheck
+    dimension : IGenericCheck
+    material: IGenericCheck
+    summary: IGenericCheck
 }
 
 export interface IProfileCheck {
@@ -81,4 +85,25 @@ export interface IArticleCheck {
 }
 export interface ITimingCheck {
     inputs : boolean
+}
+export interface IGenericCheck{
+    inputs : boolean
+}
+
+export interface IHour {
+    hour: string;
+  }
+
+export interface IMaterial {
+    materialCode: string;
+    material: string;
+    priceMin: number;
+    priceMax: number;
+}
+
+export interface IMaterialLock {
+    materialCode: string;
+    lockType: string;
+    priceMin: number;
+    priceMax: number;
 }

@@ -3,17 +3,18 @@ import { Stepper } from "./Stepper";
 import { StepperControl } from "./StepperControl";
 import { Anagrafica } from "./Steps/Anagrafica";
 import { Articolo } from "./Steps/Articolo";
-import { Complete } from "./Steps/Complete";
 import { Dimensioni } from "./Steps/Dimensioni";
 import { Materiali } from "./Steps/Materiali";
 import { Riepilogo } from "./Steps/Riepilogo";
 import { Tempistiche } from "./Steps/Tempistiche";
 import { useState } from "react";
+import { useAppSelector } from "../../store/hooks";
+import axios from "../../api/axios";
 
 const Preventivo = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const [userData, setUserData] = useState("");
-  const [finalData, setFinalData] = useState([]);
+  const cliente = useAppSelector((state) => state.user.user);
+  const preventivo = useAppSelector((state) => state.preventiveS.preventive);
 
   const steps = ["Profile", "Article", "Timing", "Dimensions", "Materials", "Summary"];
 
@@ -36,6 +37,26 @@ const Preventivo = () => {
     }
   };
 
+  const handleFetch = async () => {
+    let SAND_URL = "";
+
+    if (cliente !== null) {
+      SAND_URL = "preventive/send/" + cliente.id_cliente;
+    } else {
+      SAND_URL = "preventive/send";
+    }
+
+    try {
+      const response = await axios.post(SAND_URL, JSON.stringify(preventivo), {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
+      console.log(response);
+    } catch (error: any) {
+      console.log(error?.response);
+    }
+  };
+
   const handleClikc = (direction: string) => {
     let newStep = currentStep;
     if (direction === "next" && newStep >= 1 && newStep < 6) {
@@ -44,8 +65,9 @@ const Preventivo = () => {
     } else if (direction === "back" && newStep <= 6 && newStep > 1) {
       newStep--;
       newStep >= 0 && newStep <= steps.length && setCurrentStep(newStep);
+    } else if (direction === "confirm") {
+      handleFetch();
     } else return newStep;
-    //direction === "next" ? newStep++ : newStep--;
     console.log("newStep" + newStep);
   };
 
