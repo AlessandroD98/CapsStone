@@ -124,7 +124,7 @@ export const NavBar = () => {
 
           <div
             className={`${
-              !toggle ? "top-[-300%]" : "flex top-20"
+              !toggle ? "top-[-400%]" : "flex top-20"
             } p-6 bg-white absolute shadow-lg right-0 mx-auto my-2 w-full z-10 animation`}
           >
             <ul className="list-none flex justify-end items-start flex-1 flex-col gap-4">

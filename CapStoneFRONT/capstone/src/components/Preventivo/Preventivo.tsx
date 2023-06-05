@@ -12,10 +12,12 @@ import { useAppSelector } from "../../store/hooks";
 import { Link } from "react-router-dom";
 import { GiConfirmed } from "react-icons/gi";
 import axios from "../../api/axios";
+import { useAuth } from "../../context/AuthProvider";
 
 const Preventivo = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [success, setSuccess] = useState(false);
+  const { auth } = useAuth();
   const cliente = useAppSelector((state) => state.user.user);
   const preventivo = useAppSelector((state) => state.preventiveS.preventive);
 
@@ -87,14 +89,18 @@ const Preventivo = () => {
         </>
       ) : (
         <div>
-          <div className="flex flex-col justify-center items-center">
-            <h1 className="text-7xl">Registration successful</h1>
+          <div className="flex flex-col justify-center items-center py-5">
+            <h1 className="text-7xl">Quote sent successfully.</h1>
             <div>
               <GiConfirmed className="text-green-500 text-9xl" />
             </div>
-            <p className="text-lg text-center mt-4">Press the button below to return to the home page and login.</p>
-            <Link to={"/"} className="bg-[#2c1b6c] text-white mt-2 p-3 rounded-full">
-              Go back Home
+            <p className="text-lg text-center mt-4">
+              {auth
+                ? "Press the button below to return to the Profile page."
+                : "Press the button below to return to the home page."}
+            </p>
+            <Link to={auth ? "/profile" : "/"} className="bg-[#2c1b6c] text-white mt-2 p-3 rounded-full">
+              {auth ? "Go back to Profile" : "Go back toHome"}
             </Link>
           </div>
         </div>

@@ -44,8 +44,8 @@ export interface IArticle {
     width: number,
     thickness: number,
     type: string,
-    //material: IMaterial | IMaterialLock | null;
     material: string,
+    
 } 
 
 export interface IPreventive {
@@ -107,4 +107,15 @@ export interface IMaterialLock {
     lockType: string;
     priceMin: number;
     priceMax: number;
+}
+
+export interface IArticleBack {
+    height: number,
+    width: number,
+    thickness: number,
+    type: string,
+    material: string,
+    windowmaterial : IMaterial
+    doormaterial: IMaterial
+    lockmaterial: IMaterialLock
 }

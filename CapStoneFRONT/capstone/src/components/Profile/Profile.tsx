@@ -46,6 +46,7 @@ const Profile = () => {
       const response = await axios.get(PROFILE_URL, config);
       const savedUser: ICliente = response.data;
       dispatch(addUser(savedUser));
+      console.log(savedUser);
       if (savedUser !== null) {
         setName(savedUser.name);
         setLastname(savedUser.lastname);

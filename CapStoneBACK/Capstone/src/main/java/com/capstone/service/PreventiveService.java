@@ -79,6 +79,14 @@ public class PreventiveService {
 		return "Preventivo creato con successo!";
 	}
 	
+	public List<Preventive> getAllPreventive () {
+		return repo.findAll();
+	}
+	
+	public List<Preventive> getAllSubmittedPrev() {
+		return repo.findByState(Preventive_State.SUBMITTED);
+	}
+	
 	public Long setNum () {
         long num = System.currentTimeMillis();
         Random rnum = new Random(num);

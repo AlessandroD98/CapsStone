@@ -36,7 +36,7 @@ public class AuthRunner implements ApplicationRunner{
 	public void run(ApplicationArguments args) throws Exception {
 		System.out.println("Run...");
 //setRoleDefault();
-//		Cliente c = userRepository.findById(7l).get();
+//		Cliente c = userRepository.findById(12l).get();
 //		Role r = roleRepository.findById(1l).get();
 //		c.getRoles().add(r);
 //		userRepository.save(c);

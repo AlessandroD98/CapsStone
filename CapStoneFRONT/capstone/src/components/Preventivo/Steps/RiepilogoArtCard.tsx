@@ -32,8 +32,8 @@ export const RiepilogoArtCard = ({ article }: Props) => {
     <main className="CustomShadowBox p-2 mb-2 rounded-md">
       <div className="flex justify-between ">
         <h3 className="uppercase">{article.type}</h3>
-        <button onClick={() => setShow(!show)} className="dimensionButton animation">
-          {show ? <BiChevronUp /> : <BiChevronDown />}
+        <button onClick={() => setShow(!show)}>
+          <BiChevronDown className={show ? "dimensionButton animation rotate-180" : "dimensionButton animation"} />
         </button>
       </div>
       {show ? (
