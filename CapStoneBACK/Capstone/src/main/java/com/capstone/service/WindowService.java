@@ -14,13 +14,13 @@ public class WindowService {
 	@Autowired WindowMaterialService wmservice;
 	
 	public String saveWindow(Window w) {
-		Window window = new Window();
-		window.setHeight(w.getHeight());
-		window.setThickness(w.getThickness());
-		window.setWitdh(w.getWitdh());
-		WindowMaterial wm = wmservice.findMaterial(w.getMaterial().getMaterialCode());
-		window.setMaterial(wm);
-		wrepo.save(window);
+//		Window window = new Window();
+//		window.setHeight(w.getHeight());
+//		window.setThickness(w.getThickness());
+//		window.setWitdh(w.getWitdh());
+//		WindowMaterial wm = wmservice.findMaterial(w.getWindowmaterial().getMaterialCode());
+//		window.setWindowmaterial(wm);
+		wrepo.save(w);
 		return "Window salvata con successo";
 	}
 }

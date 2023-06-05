@@ -15,13 +15,14 @@ public class DoorService {
 	@Autowired DoorMaterialService dmservice;
 	
 	public String saveDoor(Door d) {
-		Door door = new Door();
-		door.setHeight(d.getHeight());
-		door.setWitdh(d.getWitdh());
-		door.setThickness(d.getThickness());
-		DoorMaterials dm = dmservice.findMaterial(d.getMaterial().getMaterialCode());
-		door.setMaterial(dm);
-		drepo.save(door);
+//		Door door = new Door();
+//		door.setHeight(d.getHeight());
+//		door.setWitdh(d.getWitdh());
+//		door.setThickness(d.getThickness());
+//		door.setType(d.getType());
+//		DoorMaterials dm = dmservice.findMaterial(d.getDoormaterial().getMaterialCode());
+//		door.setDoormaterial(dm);
+		drepo.save(d);
 		return "Door salvata correttamente";
 	}
 }

@@ -6,10 +6,12 @@ import Logo from "../../assets/nuovologo.png";
 import { navLinks } from "../../constants";
 import { useAuth } from "../../context/AuthProvider";
 import { GrClose, GrMenu } from "react-icons/gr";
-import { useAppSelector } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { deleteUser } from "../../store/features/userSlice";
 
 export const NavBar = () => {
   const user = useAppSelector((state) => state.user.user);
+  const dispatch = useAppDispatch();
 
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
@@ -101,7 +103,10 @@ export const NavBar = () => {
           {auth ? (
             <li
               className="text-[#ff8190] hover:text-[#c51e32] text-[18px] font-medium cursor-pointer animation"
-              onClick={() => setAuth(null)}
+              onClick={() => {
+                setAuth(null);
+                dispatch(deleteUser());
+              }}
             >
               <Link to="">Log out</Link>
             </li>

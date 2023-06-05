@@ -9,10 +9,13 @@ import { Riepilogo } from "./Steps/Riepilogo";
 import { Tempistiche } from "./Steps/Tempistiche";
 import { useState } from "react";
 import { useAppSelector } from "../../store/hooks";
+import { Link } from "react-router-dom";
+import { GiConfirmed } from "react-icons/gi";
 import axios from "../../api/axios";
 
 const Preventivo = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [success, setSuccess] = useState(false);
   const cliente = useAppSelector((state) => state.user.user);
   const preventivo = useAppSelector((state) => state.preventiveS.preventive);
 
@@ -52,6 +55,7 @@ const Preventivo = () => {
         withCredentials: true,
       });
       console.log(response);
+      setSuccess(true);
     } catch (error: any) {
       console.log(error?.response);
     }
@@ -73,11 +77,28 @@ const Preventivo = () => {
 
   return (
     <main className="mx-auto shadow-xl rounded-2xl pb-2 bg-white">
-      <div className="container horizontal mt-5">
-        <Stepper steps={steps} currentStep={currentStep} />
-      </div>
-      <div className="my-10 p-10">{displayStep(currentStep)}</div>
-      <StepperControl handleClick={handleClikc} currentStep={currentStep} steps={steps} />
+      {!success ? (
+        <>
+          <div className="container horizontal mt-5">
+            <Stepper steps={steps} currentStep={currentStep} />
+          </div>
+          <div className="my-10 p-10">{displayStep(currentStep)}</div>
+          <StepperControl handleClick={handleClikc} currentStep={currentStep} steps={steps} />
+        </>
+      ) : (
+        <div>
+          <div className="flex flex-col justify-center items-center">
+            <h1 className="text-7xl">Registration successful</h1>
+            <div>
+              <GiConfirmed className="text-green-500 text-9xl" />
+            </div>
+            <p className="text-lg text-center mt-4">Press the button below to return to the home page and login.</p>
+            <Link to={"/"} className="bg-[#2c1b6c] text-white mt-2 p-3 rounded-full">
+              Go back Home
+            </Link>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

@@ -40,7 +40,7 @@ export const Articolo = () => {
           width: 0,
           thickness: 0,
           type: "door",
-          material: null,
+          material: "",
         })
       );
     } else if (
@@ -54,7 +54,7 @@ export const Articolo = () => {
           width: 0,
           thickness: 0,
           type: "window",
-          material: null,
+          material: "",
         })
       );
     } else if (checkboxState.name === checkBoxList.lock && !lookForProp("type", "lock") && checkboxState.selectLock) {
@@ -64,7 +64,7 @@ export const Articolo = () => {
           width: 0,
           thickness: 0,
           type: "lock",
-          material: null,
+          material: "",
         })
       );
     } else if (
@@ -78,7 +78,7 @@ export const Articolo = () => {
           width: 0,
           thickness: 0,
           type: "other",
-          material: null,
+          material: "",
         })
       );
     } else if (checkboxState.name === checkBoxList.door && lookForProp("type", "door") && !checkboxState.selectDoor) {

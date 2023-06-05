@@ -30,6 +30,7 @@ public class Article {
 	private Double witdh;
 	private Double thickness;
 	private String type;
+	private String material;
 	@ManyToOne
 	@JsonBackReference
 	private Preventive preventive;

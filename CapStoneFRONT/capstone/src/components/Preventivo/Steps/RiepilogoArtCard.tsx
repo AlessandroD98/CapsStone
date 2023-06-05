@@ -1,6 +1,7 @@
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IArticle, IMaterial, IMaterialLock } from "../../../interface/Interface";
+import axios from "../../../api/axios";
 
 type Props = {
   article: IArticle;
@@ -8,6 +9,25 @@ type Props = {
 
 export const RiepilogoArtCard = ({ article }: Props) => {
   const [show, setShow] = useState(false);
+  const [currentMaterial, setCurrrentMaterial] = useState<IMaterial | IMaterialLock | null>(null);
+
+  const handleFetch = async () => {
+    try {
+      const BASE_URL = "/materials/" + article.type + "material/" + article.material;
+      const response = await axios.get(BASE_URL);
+      setCurrrentMaterial(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (article.material !== "") {
+      handleFetch();
+    }
+  }, []);
+
   return (
     <main className="CustomShadowBox p-2 mb-2 rounded-md">
       <div className="flex justify-between ">
@@ -26,16 +46,16 @@ export const RiepilogoArtCard = ({ article }: Props) => {
           </div>
           <div>
             <h4 className="font-semibold text-center">Material</h4>
-            {article.material !== null ? (
+            {article.material !== "" ? (
               <>
                 <p>
-                  {article.material !== null && "lockType" in article.material
-                    ? (article.material as IMaterialLock).lockType
-                    : (article.material as IMaterial).material}
+                  {currentMaterial !== null && "lockType" in currentMaterial
+                    ? (currentMaterial as IMaterialLock).lockType
+                    : (currentMaterial as IMaterial).material}
                 </p>
-                <p>Material Code: {article.material?.materialCode}</p>
+                <p>Material Code: {article.material}</p>
                 <p>
-                  Price: ~({article.material?.priceMin}€ - {article.material?.priceMax}€)
+                  Price: ~({currentMaterial?.priceMin}€ - {currentMaterial?.priceMax}€)
                 </p>
               </>
             ) : (

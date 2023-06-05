@@ -16,7 +16,7 @@ export const MaterialCard = ({ article }: Props) => {
 
   const handleFetch = async () => {
     try {
-      const BASE_URL = "/preventive/materials/" + article.type + "material";
+      const BASE_URL = "materials/" + article.type + "material";
 
       const response = await axios.get(BASE_URL);
       console.log(response.data);
@@ -26,7 +26,7 @@ export const MaterialCard = ({ article }: Props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedMaterial = materials[parseInt(e.target.value)];
-    const updatedArticle = { ...article, material: selectedMaterial };
+    const updatedArticle = { ...article, material: selectedMaterial.materialCode };
     dispatch(updateArticle(updatedArticle));
   };
 

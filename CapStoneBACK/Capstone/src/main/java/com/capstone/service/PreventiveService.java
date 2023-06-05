@@ -14,9 +14,12 @@ import com.capstone.Enums.Preventive_State;
 import com.capstone.models.Article;
 import com.capstone.models.Cliente;
 import com.capstone.models.Door;
+import com.capstone.models.DoorMaterials;
 import com.capstone.models.Lock;
+import com.capstone.models.LockMaterial;
 import com.capstone.models.Preventive;
 import com.capstone.models.Window;
+import com.capstone.models.WindowMaterial;
 import com.capstone.payLoad.PreventivoDto;
 import com.capstone.repository.ClienteRepo;
 import com.capstone.repository.PreventiveRepo;
@@ -29,6 +32,9 @@ public class PreventiveService {
 	@Autowired LockService lservice;
 	@Autowired WindowService wservice;
 	@Autowired DoorService dservice;
+	@Autowired DoorMaterialService dmserive;
+	@Autowired WindowMaterialService wmservice;
+	@Autowired LockMaterialService lmservice;
 	
 	public String createPreventive (PreventivoDto prev, Long id) {
 		Cliente c = crepo.findById(id).get();
@@ -41,6 +47,8 @@ public class PreventiveService {
 		p.setState(Preventive_State.SUBMITTED);
 		p.setNumeropreventivo(setNum());
 		p.setCliente(c);
+		repo.save(p);
+		p.setArticles(saveArticles(prev.getArticles(),p));
 		repo.save(p);
 		return "Preventivo creato con successo!";
 	}
@@ -55,38 +63,18 @@ public class PreventiveService {
 		p.setDescription(prev.getDescription());
 		p.setInspectionDate(prev.getInspectionDate());
 		p.setInspectionHour(prev.getInspectionHour().getHour());
+		Cliente c = new Cliente();
+		c.setName(prev.getCliente().getName());
+		c.setLastname(prev.getCliente().getLastname());
+		c.setEmail(prev.getCliente().getEmail());
+		c.setAddress(prev.getCliente().getAddress());
+		c.setCity(prev.getCliente().getCity());
+		c.setZipCode(prev.getCliente().getZipCode());
+		crepo.save(c);
+		p.setCliente(c);
+		repo.save(p);
 		
-		//Riceve la lista degli articoli
-		
-		List<Article> savedArticles = new ArrayList<>();
-		
-		//Loop sulla lista e per ogni elemento si salva il type con il corrispettivo service
-		
-		for(Article article : prev.getArticles()) {
-			String type = article.getType();
-			if(type.equalsIgnoreCase("door")) {
-				Door door = (Door) article;
-				dservice.saveDoor(door);
-				door.setPreventive(p);
-				savedArticles.add(door);
-				
-			} else if(type.equalsIgnoreCase("window")){
-				Window window = (Window) article;
-				wservice.saveWindow(window);
-				window.setPreventive(p);
-				savedArticles.add(window);
-				
-			} else if(type.equalsIgnoreCase("lock")) {
-				Lock lock = (Lock) article;
-				lservice.saveLock(lock);
-				lock.setPreventive(p);
-				savedArticles.add(lock);
-			}
-		}
-		
-		//Dopo si aggiunge la lista di elementi salvati al preventivo
-		
-		p.setArticles(savedArticles);
+		p.setArticles(saveArticles(prev.getArticles(),p));
 		repo.save(p);
 		return "Preventivo creato con successo!";
 	}
@@ -101,6 +89,77 @@ public class PreventiveService {
 	public LocalDate dateToLocalDate (Date input) {
 		LocalDate date = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		return date;
+	}
+	
+	public List<Article> saveArticles(List<Article> articles, Preventive p) {
+		
+		//Riceve la lista degli articoli
+		
+				List<Article> savedArticles = new ArrayList<>();
+				
+				//Loop sulla lista e per ogni elemento si salva il type con il corrispettivo service
+				
+				for(Article article : articles) {
+					String type = article.getType();
+					if(type.equalsIgnoreCase("door")) {
+						Door door = new Door();
+						door.setHeight(article.getHeight());
+						door.setThickness(article.getThickness());
+						door.setWitdh(article.getWitdh());
+						door.setType(article.getType());
+						
+						if(article.getMaterial() != "" && article.getMaterial() != null ) {
+							
+							DoorMaterials dmaterial = dmserive.findMaterial(article.getMaterial());
+							if(dmaterial != null) {
+								door.setDoormaterial(dmaterial);
+							}
+						}
+						door.setPreventive(p);
+						dservice.saveDoor(door);
+						savedArticles.add(door);
+						
+					} else if(type.equalsIgnoreCase("window")){
+						Window window = new Window();
+						window.setHeight(article.getHeight());
+						window.setThickness(article.getThickness());
+						window.setWitdh(article.getWitdh());
+						window.setType(article.getType());
+						
+						if(article.getMaterial() != "" && article.getMaterial() != null) {
+							
+							WindowMaterial wmateril = wmservice.findMaterial(article.getMaterial());
+							if(wmateril != null) {
+								window.setWindowmaterial(wmateril);
+							}
+						}
+						
+						window.setPreventive(p);
+						wservice.saveWindow(window);
+						savedArticles.add(window);
+						
+					} else if(type.equalsIgnoreCase("lock")) {
+						Lock lock = new Lock();
+						lock.setHeight(article.getHeight());
+						lock.setThickness(article.getThickness());
+						lock.setWitdh(article.getWitdh());
+						lock.setType(article.getType());
+						
+						if(article.getMaterial() != "" && article.getMaterial() != null) {
+							
+							LockMaterial lmateril = lmservice.findMaterial(article.getMaterial());
+							if(lmateril != null) {
+								lock.setLockmaterial(null);
+							}
+						}
+						
+						lservice.saveLock(lock);
+						lock.setPreventive(p);
+						savedArticles.add(lock);
+					}
+				}
+		
+		return savedArticles;
 	}
 	
 }

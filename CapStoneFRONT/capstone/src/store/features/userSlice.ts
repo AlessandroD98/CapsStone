@@ -15,9 +15,12 @@ initialState,
 reducers: {
     addUser:(state,action:PayloadAction<ICliente>)=>{
         state.user = action.payload;
+    },
+    deleteUser:(state,action:PayloadAction)=>{
+        state.user = null
     }
 }
 })
 
 export default userSlice.reducer
-export const { addUser }=userSlice.actions 
+export const { addUser, deleteUser }=userSlice.actions 

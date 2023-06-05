@@ -44,7 +44,8 @@ export interface IArticle {
     width: number,
     thickness: number,
     type: string,
-    material: IMaterial | IMaterialLock | null;
+    //material: IMaterial | IMaterialLock | null;
+    material: string,
 } 
 
 export interface IPreventive {
@@ -54,7 +55,7 @@ inspectionHour: IHour,
 cliente: IPrevUser,
 description: string,
 state: string
-
+numeropreventivo: number
 }
 
 export interface IPrevUser {

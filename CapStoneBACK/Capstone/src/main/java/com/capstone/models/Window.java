@@ -41,5 +41,5 @@ public class Window extends Article {
 	
 	@OneToOne
 	@JoinColumn(name="material_id")
-	private WindowMaterial material;
+	private WindowMaterial windowmaterial;
 }

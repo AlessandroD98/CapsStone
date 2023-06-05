@@ -23,8 +23,8 @@ const initialState: prevState = {
             address: "", 
         },
         description: "",
-        state: ""
-        
+        state: "",
+        numeropreventivo: 0
     }
 }
 

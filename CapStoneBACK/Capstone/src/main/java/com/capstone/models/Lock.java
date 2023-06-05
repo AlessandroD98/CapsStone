@@ -39,5 +39,5 @@ public class Lock extends Article {
 	
 	@OneToOne
     @JoinColumn(name = "material_id")
-    private LockMaterial material;
+    private LockMaterial lockmaterial;
 }

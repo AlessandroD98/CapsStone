@@ -107,7 +107,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-xl ps-7">
+    <div className="bg-white rounded-xl shadow-xl ps-7 pb-10">
       <div className="flex py-8">
         <h1 className="text-left text-xl font-medium flex-[0.5] ">Settings</h1>
 
