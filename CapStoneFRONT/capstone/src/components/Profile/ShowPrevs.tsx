@@ -1,7 +1,7 @@
 import { IArticleBack, IPreventive } from "../../interface/Interface";
 import { PrevArticlesCard } from "./PrevArticlesCard";
 import { BiChevronDown, BiDotsHorizontalRounded } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthProvider";
 import axios from "../../api/axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,9 +9,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 type Props = {
   preventivi: IPreventive[];
+  update?: () => void;
 };
 
-export const ShowPrevs = ({ preventivi }: Props) => {
+export const ShowPrevs = ({ preventivi, update }: Props) => {
   const [showArticles, setShowArticles] = useState<{ [key: string]: boolean }>({});
   const [show, setShow] = useState<{ [key: string]: boolean }>({});
   const { auth } = useAuth();
@@ -43,10 +44,10 @@ export const ShowPrevs = ({ preventivi }: Props) => {
     }));
   };
 
-  const handleFetch = async (nmuprev: number, i: number) => {
-    console.log(auth?.roles);
+  const handleFetch = async (nmuprev: number, s: string) => {
+    console.log(s);
     try {
-      const BASE_URL = "preventive/state/" + nmuprev + "/" + i;
+      const BASE_URL = "preventive/state/" + nmuprev + "/" + s;
 
       const config = {
         headers: {
@@ -68,6 +69,7 @@ export const ShowPrevs = ({ preventivi }: Props) => {
         theme: "light",
         className: "CustomToast",
       });
+      if (update) update();
     } catch (error) {
       console.log(error);
       notify();
@@ -79,7 +81,7 @@ export const ShowPrevs = ({ preventivi }: Props) => {
   const filterState = (state: string) => {
     return stateArr.filter((s) => s !== state);
   };
-
+  useEffect(() => {}, [preventivi]);
   return (
     <div className="w-full pe-5">
       {preventivi !== null && preventivi?.length === 0 ? (
@@ -152,7 +154,10 @@ export const ShowPrevs = ({ preventivi }: Props) => {
                         <li
                           key={i}
                           className="hover:bg-[#d3d3d3] cursor-pointer ease-in-out duration-500 text-[#6b6b6b]  px-4 mb-2 py-2"
-                          onClick={() => handleFetch(prev.numeropreventivo, i)}
+                          onClick={() => {
+                            handleFetch(prev.numeropreventivo, s);
+                            toggleMenu(prev.numeropreventivo);
+                          }}
                         >
                           Change to {s}
                         </li>

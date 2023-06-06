@@ -7,12 +7,19 @@ import { useAuth } from "../../context/AuthProvider";
 import axios from "../../api/axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { addPrevs, addSubPrevs } from "../../store/features/allPrevSlice";
 
 const AdminPage = () => {
   const [switchPage, setSwitchPage] = useState("New Preventives");
-  const [preventivi, setPreventivi] = useState<IPreventive[]>();
-  const [preventiviSub, setPreventiviSub] = useState<IPreventive[]>();
+  //const [preventivi, setPreventivi] = useState<IPreventive[]>();
+  //const [preventiviSub, setPreventiviSub] = useState<IPreventive[]>();
   const { auth } = useAuth();
+
+  const preventivi = useAppSelector((state) => state.allPrevS.prevs);
+  const preventiviSub = useAppSelector((state) => state.allPrevS.subprevs);
+
+  const dispatch = useAppDispatch();
 
   const handleFetchAll = async () => {
     try {
@@ -25,7 +32,8 @@ const AdminPage = () => {
       };
 
       const response = await axios.get(BASE_URL, config);
-      setPreventivi(response.data);
+      //setPreventivi(response.data);
+      dispatch(addPrevs(response.data));
     } catch (error) {
       toast.error("Something went wrong! " + error, {
         position: "bottom-center",
@@ -52,7 +60,8 @@ const AdminPage = () => {
       };
 
       const response = await axios.get(BASE_URL, config);
-      setPreventiviSub(response.data);
+      //setPreventiviSub(response.data);
+      dispatch(addSubPrevs(response.data));
     } catch (error) {
       toast.error("Something went wrong! " + error, {
         position: "bottom-center",
@@ -107,9 +116,9 @@ const AdminPage = () => {
           <h2 className="font-bold text-4xl mb-2">Welcome to the administration page.</h2>
           <p>Here you can manage registered customers, view and change the status of quotes.</p>
           {switchPage === "New Preventives" ? (
-            <ShowPrevs preventivi={preventiviSub ? preventiviSub : []} />
+            <ShowPrevs preventivi={preventiviSub ? preventiviSub : []} update={() => handleFetchSub()} />
           ) : (
-            <ShowPrevs preventivi={preventivi ? preventivi : []} />
+            <ShowPrevs preventivi={preventivi ? preventivi : []} update={() => handleFetchAll()} />
           )}
         </section>
       </main>

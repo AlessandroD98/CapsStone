@@ -27,7 +27,7 @@ public class Article {
 	//private String nameArticle;
 	//private Double price;
 	private Double height;
-	private Double witdh;
+	private Double width;
 	private Double thickness;
 	private String type;
 	private String material;

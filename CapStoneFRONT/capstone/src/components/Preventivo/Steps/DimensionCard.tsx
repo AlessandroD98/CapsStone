@@ -13,7 +13,7 @@ export const DimensionCard = ({ article }: Props) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    const updatedArticle = { ...article, [name]: value };
+    const updatedArticle = { ...article, [name]: parseInt(value) };
     dispatch(updateArticle(updatedArticle));
   };
 

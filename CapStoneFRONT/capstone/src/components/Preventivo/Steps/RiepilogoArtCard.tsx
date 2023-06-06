@@ -40,7 +40,7 @@ export const RiepilogoArtCard = ({ article }: Props) => {
           <div>
             <h4 className="font-semibold text-center">Size of the Article</h4>
             <p>Height: {article.height === 0 ? "Height not specified" : article.height + "cm"}</p>
-            <p>Width: {article.width === 0 ? "Width not specified" : article.width + "cm"}</p>
+            <p>Width: {article.width === 0 ? "Width not specified" : article?.width + "cm"}</p>
             <p>Thickness: {article.thickness === 0 ? "Thickness not specified" : article.thickness + "cm"}</p>
           </div>
           <div>

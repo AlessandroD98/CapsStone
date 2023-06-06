@@ -3,6 +3,7 @@ import { userSlice } from './features/userSlice';
 import { alertControlSlice } from './features/alertControlSlice'
 import { preventivoSlice } from './features/preventivoSlice';
 import { prevInputCheck } from './features/prevInputCheck';
+import { allprevSlice } from './features/allPrevSlice';
 
 
 
@@ -11,7 +12,8 @@ export const store = configureStore({
    user: userSlice.reducer,
    alert: alertControlSlice.reducer,
    preventiveS: preventivoSlice.reducer,
-   checkS : prevInputCheck.reducer
+   checkS : prevInputCheck.reducer,
+   allPrevS : allprevSlice.reducer
   },
 });
 

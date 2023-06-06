@@ -87,9 +87,9 @@ public class PreventiveService {
 		return repo.findByState(Preventive_State.SUBMITTED);
 	}
 	
-	public String changeState(Long id, Integer num) {
+	public String changeState(Long id, String s) {
 		Preventive p = repo.findById(id).get();
-		Preventive_State state = checkState(num);
+		Preventive_State state = checkState(s);
 		p.setState(state);
 		repo.save(p);
 		return "Stato cambiato con successo";
@@ -121,7 +121,7 @@ public class PreventiveService {
 						Door door = new Door();
 						door.setHeight(article.getHeight());
 						door.setThickness(article.getThickness());
-						door.setWitdh(article.getWitdh());
+						door.setWidth(article.getWidth());
 						door.setType(article.getType());
 						
 						if(article.getMaterial() != "" && article.getMaterial() != null ) {
@@ -139,7 +139,7 @@ public class PreventiveService {
 						Window window = new Window();
 						window.setHeight(article.getHeight());
 						window.setThickness(article.getThickness());
-						window.setWitdh(article.getWitdh());
+						window.setWidth(article.getWidth());
 						window.setType(article.getType());
 						
 						if(article.getMaterial() != "" && article.getMaterial() != null) {
@@ -158,7 +158,7 @@ public class PreventiveService {
 						Lock lock = new Lock();
 						lock.setHeight(article.getHeight());
 						lock.setThickness(article.getThickness());
-						lock.setWitdh(article.getWitdh());
+						lock.setWidth(article.getWidth());
 						lock.setType(article.getType());
 						
 						if(article.getMaterial() != "" && article.getMaterial() != null) {
@@ -178,13 +178,13 @@ public class PreventiveService {
 		return savedArticles;
 	}
 	
-	public Preventive_State checkState(Integer num) {
-		switch(num) {
-		case 0:
+	public Preventive_State checkState(String s) {
+		switch(s) {
+		case "IN_PROGRESS":
 			return Preventive_State.IN_PROGRESS;
-		case 1:
+		case "CANCELLED":
 			return Preventive_State.CANCELLED;
-		case 2:
+		case "CONFIRMED":
 			return Preventive_State.CONFIRMED;
 			default: return Preventive_State.SUBMITTED;
 		}

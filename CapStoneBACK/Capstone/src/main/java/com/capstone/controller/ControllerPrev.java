@@ -52,7 +52,7 @@ public class ControllerPrev {
 
 	@GetMapping("state/{id}/{state}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<String> changePrevState(@PathVariable Long id, @PathVariable Integer state){
+	public ResponseEntity<String> changePrevState(@PathVariable Long id, @PathVariable String state){
 		return new ResponseEntity<String>(pservice.changeState(id, state), HttpStatus.OK);
 	}
 	
