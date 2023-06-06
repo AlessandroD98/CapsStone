@@ -7,20 +7,16 @@ import { ICliente } from "../../interface/Interface";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { addUser } from "../../store/features/userSlice";
 import { BsFillInfoCircleFill } from "react-icons/bs";
-import { SuccessAlert } from "../Alert/SuccessAlert";
-import { ErrorAlert } from "../Alert/ErrorAlert";
-import { changeErrState, changeState } from "../../store/features/alertControlSlice";
 import { Preventives } from "./Preventives";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const { auth } = useAuth();
   const dispatch = useAppDispatch();
-  const alertState = useAppSelector((state) => state.alert.alert);
-  const errState = useAppSelector((state) => state.alert.err);
   const user = useAppSelector((state) => state.user.user);
 
   const [switchPage, setSwitchPage] = useState("details");
-  const [mess, setMess] = useState("");
 
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
@@ -46,7 +42,6 @@ const Profile = () => {
       const response = await axios.get(PROFILE_URL, config);
       const savedUser: ICliente = response.data;
       dispatch(addUser(savedUser));
-      console.log(savedUser);
       if (savedUser !== null) {
         setName(savedUser.name);
         setLastname(savedUser.lastname);
@@ -82,11 +77,30 @@ const Profile = () => {
       );
 
       dispatch(addUser(response.data));
-      dispatch(changeState(!alertState));
+      toast.success("Changes were successfully saved.", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        className: "CustomToast",
+      });
       handelProfile();
     } catch (error: any) {
-      setMess(error);
-      dispatch(changeErrState(!errState));
+      toast.error("Something went wrong " + error, {
+        position: "bottom-right",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        className: "CustomToast",
+      });
     }
   };
 
@@ -242,8 +256,8 @@ const Profile = () => {
           <Preventives />
         )}
       </main>
-      {alertState ? <SuccessAlert /> : ""}
-      {errState ? <ErrorAlert msg={mess} /> : ""}
+
+      <ToastContainer />
     </div>
   );
 };

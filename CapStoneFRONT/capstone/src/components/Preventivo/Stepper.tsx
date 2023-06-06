@@ -30,9 +30,6 @@ export const Stepper = ({ steps, currentStep }: Props) => {
     }
   };
 
-  //const currentCheck = setCheck(currentStep);
-  //console.log(currentCheck);
-
   const updateStep = (stepNumber: number, steps: IStep[]) => {
     const newSteps = [...steps];
     let count = 0;

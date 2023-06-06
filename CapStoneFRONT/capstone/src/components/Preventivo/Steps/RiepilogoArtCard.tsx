@@ -1,4 +1,4 @@
-import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { BiChevronDown } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { IArticle, IMaterial, IMaterialLock } from "../../../interface/Interface";
 import axios from "../../../api/axios";
@@ -16,7 +16,6 @@ export const RiepilogoArtCard = ({ article }: Props) => {
       const BASE_URL = "/materials/" + article.type + "material/" + article.material;
       const response = await axios.get(BASE_URL);
       setCurrrentMaterial(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

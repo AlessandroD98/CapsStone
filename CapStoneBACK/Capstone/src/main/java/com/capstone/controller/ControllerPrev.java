@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,4 +50,10 @@ public class ControllerPrev {
 		return new ResponseEntity<List<Preventive>>(pservice.getAllSubmittedPrev(),HttpStatus.OK);
 	}
 
+	@GetMapping("state/{id}/{state}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<String> changePrevState(@PathVariable Long id, @PathVariable Integer state){
+		return new ResponseEntity<String>(pservice.changeState(id, state), HttpStatus.OK);
+	}
+	
 }

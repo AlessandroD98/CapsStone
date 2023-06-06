@@ -74,7 +74,6 @@ const Preventivo = () => {
     } else if (direction === "confirm") {
       handleFetch();
     } else return newStep;
-    console.log("newStep" + newStep);
   };
 
   return (

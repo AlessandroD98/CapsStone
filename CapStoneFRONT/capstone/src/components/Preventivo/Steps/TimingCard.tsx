@@ -14,11 +14,7 @@ export const TimingCard = ({ hour, setSelectedHour, selected }: Props) => {
   const handleClick = () => {
     if (!selected) {
       setSelectedHour(hour);
-      console.log(hour);
       dispatch(addHour(hour));
-      console.log("click");
-      console.log(selected);
-      console.log(hour);
     }
   };
 

@@ -15,16 +15,13 @@ export const Tempistiche = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    console.log(value);
     const newDate = new Date(value);
     const currentDayValue = newDate.getUTCDay();
     setCurrentDay(currentDayValue);
     dispatch(addDate(value));
   };
 
-  useEffect(() => {
-    console.log(currentDay);
-  }, [currentDay]);
+  useEffect(() => {}, [currentDay]);
 
   useEffect(() => {
     if (Hour !== null && Hour.hour !== "" && date !== "" && date !== null) {

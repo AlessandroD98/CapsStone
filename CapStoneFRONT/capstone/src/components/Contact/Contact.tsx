@@ -6,6 +6,8 @@ import DoorCanvas from "./Door";
 import emailjs from "@emailjs/browser";
 import { SectionWrapper } from "../hoc";
 import "./Contact.scss";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const sID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
 const tID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
@@ -51,7 +53,17 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          alert("Thank you. I will get back to you as soon as possible.");
+          toast.success("Thanks for contacting us", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            className: "CustomToast",
+          });
 
           setForm({
             name: "",
@@ -63,7 +75,17 @@ const Contact = () => {
           setLoading(false);
           console.error(error);
 
-          alert("Ahh, something went wrong. Please try again.");
+          toast.error("Something went wrong " + error, {
+            position: "bottom-center",
+            autoClose: false,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            className: "CustomToast",
+          });
         }
       );
   };
@@ -125,6 +147,7 @@ const Contact = () => {
       <motion.div variants={slideIn("right", "tween", 0.2, 1)} className="xl:flex-1 xl:h-auto md:h-[550px] h-[350px]">
         <DoorCanvas />
       </motion.div>
+      <ToastContainer />
     </div>
   );
 };

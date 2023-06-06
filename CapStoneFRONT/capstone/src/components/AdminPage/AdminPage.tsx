@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { IPreventive } from "../../interface/Interface";
 import { useAuth } from "../../context/AuthProvider";
 import axios from "../../api/axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminPage = () => {
   const [switchPage, setSwitchPage] = useState("New Preventives");
@@ -25,7 +27,17 @@ const AdminPage = () => {
       const response = await axios.get(BASE_URL, config);
       setPreventivi(response.data);
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong! " + error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        className: "CustomToast",
+      });
     }
   };
 
@@ -42,7 +54,17 @@ const AdminPage = () => {
       const response = await axios.get(BASE_URL, config);
       setPreventiviSub(response.data);
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong! " + error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        className: "CustomToast",
+      });
     }
   };
 
@@ -91,6 +113,7 @@ const AdminPage = () => {
           )}
         </section>
       </main>
+      <ToastContainer />
     </div>
   );
 };

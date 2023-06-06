@@ -19,7 +19,6 @@ export const MaterialCard = ({ article }: Props) => {
       const BASE_URL = "materials/" + article.type + "material";
 
       const response = await axios.get(BASE_URL);
-      console.log(response.data);
       setMaterials(response.data);
     } catch (error) {}
   };

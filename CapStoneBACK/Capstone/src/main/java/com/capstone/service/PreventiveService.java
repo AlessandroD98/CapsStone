@@ -87,6 +87,14 @@ public class PreventiveService {
 		return repo.findByState(Preventive_State.SUBMITTED);
 	}
 	
+	public String changeState(Long id, Integer num) {
+		Preventive p = repo.findById(id).get();
+		Preventive_State state = checkState(num);
+		p.setState(state);
+		repo.save(p);
+		return "Stato cambiato con successo";
+	}
+	
 	public Long setNum () {
         long num = System.currentTimeMillis();
         Random rnum = new Random(num);
@@ -168,6 +176,19 @@ public class PreventiveService {
 				}
 		
 		return savedArticles;
+	}
+	
+	public Preventive_State checkState(Integer num) {
+		switch(num) {
+		case 0:
+			return Preventive_State.IN_PROGRESS;
+		case 1:
+			return Preventive_State.CANCELLED;
+		case 2:
+			return Preventive_State.CONFIRMED;
+			default: return Preventive_State.SUBMITTED;
+		}
+		
 	}
 	
 }
